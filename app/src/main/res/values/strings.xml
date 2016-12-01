@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">ParameterizedQueries</string>
     <string name="database_options">Database options</string>
-    <string name="view_db">View database</string>
     <string name="query_db">Parameterized queries</string>
     <string name="insert_into_db">Insert into database</string>
     <string name="delete_from_db">Delete from database</string>
