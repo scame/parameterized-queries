@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.scame.parameterizedqueries.R;
+import com.scame.parameterizedqueries.fragments.DatabaseOptionsFragment;
 import com.scame.parameterizedqueries.fragments.DeletionFragment;
 import com.scame.parameterizedqueries.fragments.InsertionFragment;
 import com.scame.parameterizedqueries.fragments.QueryFragment;

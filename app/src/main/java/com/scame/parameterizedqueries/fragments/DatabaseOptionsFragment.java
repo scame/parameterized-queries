@@ -1,4 +1,4 @@
-package com.scame.parameterizedqueries.activities;
+package com.scame.parameterizedqueries.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,10 +16,10 @@ import butterknife.ButterKnife;
 
 public class DatabaseOptionsFragment extends Fragment {
 
-    static final String QUERY_OPTION = "query";
-    static final String UPDATE_OPTION = "update";
-    static final String DELETE_OPTION = "delete";
-    static final String INSERT_OPTION = "insert";
+    public static final String QUERY_OPTION = "query";
+    public static final String UPDATE_OPTION = "update";
+    public static final String DELETE_OPTION = "delete";
+    public static final String INSERT_OPTION = "insert";
 
     @BindView(R.id.query_db_tv)
     TextView queryDbTv;
