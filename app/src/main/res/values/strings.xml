@@ -5,4 +5,16 @@
     <string name="insert_into_db">Insert into database</string>
     <string name="delete_from_db">Delete from database</string>
     <string name="update_records">Update records</string>
+    <string name="country_id">country_id</string>
+    <string name="country_name">country_name</string>
+    <string name="population">population</string>
+    <string name="language_id">id</string>
+    <string name="language_name">language_name</string>
+    <string name="native_speakers">native_speakers</string>
+    <string name="language_family">language_family</string>
+    <string name="id">id</string>
+    <string name="language_id_long">language_id</string>
+    <string name="capital_id">cap_id</string>
+    <string name="capital_name">cap_name</string>
+    <string name="capital_population">cap_population</string>
 </resources>
