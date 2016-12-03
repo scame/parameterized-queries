@@ -46,6 +46,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         return "CREATE TABLE " + LanguageTable.TABLE_NAME +
                 "(" +
                 LanguageTable.KEY_LANGUAGE_ID + " INTEGER PRIMARY KEY," +
+                LanguageTable.KEY_LANGUAGE_NAME + " TEXT," +
                 LanguageTable.KEY_LANGUAGE_FAMILY + " TEXT," +
                 LanguageTable.KEY_NATIVE_SPEAKERS + " INTEGER" +
                 ")";
