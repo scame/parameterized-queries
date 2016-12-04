@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import com.scame.parameterizedqueries.R;
 import com.scame.parameterizedqueries.models.CountryLanguagesModel;
@@ -26,13 +26,13 @@ public class CountryLanguagesAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static class CountryLanguagesHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.country_lang_id_tv)
-        TextView id;
+        EditText id;
 
         @BindView(R.id.country_id_tv)
-        TextView countryId;
+        EditText countryId;
 
         @BindView(R.id.language_id_tv)
-        TextView languageId;
+        EditText languageId;
 
         public CountryLanguagesHolder(View itemView) {
             super(itemView);

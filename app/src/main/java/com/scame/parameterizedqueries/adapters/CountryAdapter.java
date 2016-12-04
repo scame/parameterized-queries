@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import com.scame.parameterizedqueries.R;
 import com.scame.parameterizedqueries.models.CountryModel;
@@ -26,13 +26,13 @@ public class CountryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static class CountriesHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.country_id_tv)
-        TextView countryId;
+        EditText countryId;
 
         @BindView(R.id.country_name_tv)
-        TextView countryName;
+        EditText countryName;
 
         @BindView(R.id.country_population_tv)
-        TextView countryPopulation;
+        EditText countryPopulation;
 
         public CountriesHolder(View itemView) {
             super(itemView);

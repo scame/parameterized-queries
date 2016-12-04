@@ -4,17 +4,17 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <TextView
+    <EditText
         android:id="@+id/country_lang_id_tv"
         style="@style/record_style"
         android:layout_weight="1"/>
 
-    <TextView
+    <EditText
         android:id="@+id/country_id_tv"
         style="@style/record_style"
         android:layout_weight="1"/>
 
-    <TextView
+    <EditText
         android:id="@+id/language_id_tv"
         style="@style/record_style"
         android:layout_weight="1"/>
