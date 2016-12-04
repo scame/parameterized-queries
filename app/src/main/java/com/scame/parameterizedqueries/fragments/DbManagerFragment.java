@@ -44,6 +44,7 @@ public class DbManagerFragment extends Fragment {
         View fragmentView = inflater.inflate(R.layout.db_manager_layout, container, false);
         ButterKnife.bind(this, fragmentView);
 
+
         return fragmentView;
     }
 }
