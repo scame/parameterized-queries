@@ -1,6 +1,5 @@
 package com.scame.parameterizedqueries.fragments;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,10 +14,10 @@ import com.scame.parameterizedqueries.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class QueryFragment extends Fragment {
+public class DbManagerFragment extends Fragment {
 
-    @BindView(R.id.query_recycler)
-    RecyclerView queryRv;
+    @BindView(R.id.db_manager_recycler)
+    RecyclerView dbManagerRv;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -26,7 +25,7 @@ public class QueryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.query_layout, container, false);
+        View fragmentView = inflater.inflate(R.layout.db_manager_layout, container, false);
         ButterKnife.bind(this, fragmentView);
 
         return fragmentView;

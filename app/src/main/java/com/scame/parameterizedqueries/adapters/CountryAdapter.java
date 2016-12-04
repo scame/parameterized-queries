@@ -23,7 +23,7 @@ public class CountryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.countries = countries;
     }
 
-    private static class CountriesHolder extends RecyclerView.ViewHolder {
+    static class CountriesHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.country_id_tv)
         EditText countryId;

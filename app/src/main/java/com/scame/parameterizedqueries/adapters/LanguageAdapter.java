@@ -23,7 +23,7 @@ public class LanguageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.languages = languages;
     }
 
-    private static class LanguagesHolder extends RecyclerView.ViewHolder {
+    static class LanguagesHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.language_id_tv)
         EditText languageId;

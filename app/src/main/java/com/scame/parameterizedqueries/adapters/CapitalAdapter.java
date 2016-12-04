@@ -23,7 +23,7 @@ public class CapitalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.capitals = capitals;
     }
 
-    private static class CapitalsHolder extends RecyclerView.ViewHolder {
+    static class CapitalsHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.capital_id_tv)
         EditText capitalId;
