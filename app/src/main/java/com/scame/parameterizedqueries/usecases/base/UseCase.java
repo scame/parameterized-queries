@@ -1,4 +1,4 @@
-package com.scame.parameterizedqueries.usecases;
+package com.scame.parameterizedqueries.usecases.base;
 
 
 import com.scame.parameterizedqueries.schedulers.ObserveOn;

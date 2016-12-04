@@ -33,4 +33,12 @@ public class CountryModel {
     public int getPopulation() {
         return population;
     }
+
+    public CountryModel() { }
+
+    public CountryModel(int id, String name, int population) {
+        this.id = id;
+        this.name = name;
+        this.population = population;
+    }
 }

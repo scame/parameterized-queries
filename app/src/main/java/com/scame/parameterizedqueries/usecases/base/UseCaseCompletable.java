@@ -1,4 +1,4 @@
-package com.scame.parameterizedqueries.usecases;
+package com.scame.parameterizedqueries.usecases.base;
 
 
 import com.scame.parameterizedqueries.schedulers.ObserveOn;
@@ -8,7 +8,7 @@ import rx.Completable;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
-public abstract class UseCaseCompletable<T> extends UseCase<T> {
+public abstract class UseCaseCompletable extends UseCase {
 
     private Completable completable;
 
