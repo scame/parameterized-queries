@@ -42,4 +42,13 @@ public class LanguageModel {
     public String getLanguageFamily() {
         return languageFamily;
     }
+
+    public LanguageModel() { }
+
+    public LanguageModel(int id, String name, int nativeSpeakers, String languageFamily) {
+        this.id = id;
+        this.name = name;
+        this.nativeSpeakers = nativeSpeakers;
+        this.languageFamily = languageFamily;
+    }
 }

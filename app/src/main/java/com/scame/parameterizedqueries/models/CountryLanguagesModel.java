@@ -32,4 +32,12 @@ public class CountryLanguagesModel {
     public int getLanguageId() {
         return languageId;
     }
+
+    public CountryLanguagesModel() { }
+
+    public CountryLanguagesModel(int id, int countryId, int languageId) {
+        this.id = id;
+        this.countryId = countryId;
+        this.languageId = languageId;
+    }
 }

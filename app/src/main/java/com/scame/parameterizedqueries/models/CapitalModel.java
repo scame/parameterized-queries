@@ -42,4 +42,13 @@ public class CapitalModel {
     public int getPopulation() {
         return population;
     }
+
+    public CapitalModel() { }
+
+    public CapitalModel(int id, int countryId, String name, int population) {
+        this.id = id;
+        this.countryId = countryId;
+        this.name = name;
+        this.population = population;
+    }
 }

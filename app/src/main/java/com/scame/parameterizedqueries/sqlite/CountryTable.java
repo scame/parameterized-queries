@@ -54,13 +54,13 @@ public class CountryTable {
 
     public List<CountryModel> getAllCountries() {
         List<CountryModel> countries = new ArrayList<>();
-        SQLiteDatabase database = databaseHelper.getReadableDatabase();
 
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
         Cursor cursor = database.rawQuery("SELECT * FROM " + TABLE_NAME, null);
 
         if (cursor != null && cursor.moveToFirst()) {
             try {
-                parseCursor(cursor, countries);
+                countries = parse(cursor);
             } finally {
                 cursor.close();
             }
@@ -68,7 +68,9 @@ public class CountryTable {
         return countries;
     }
 
-    private void parseCursor(Cursor cursor, List<CountryModel> countries) {
+    private List<CountryModel> parse(Cursor cursor) {
+        List<CountryModel> countries = new ArrayList<>();
+
         int idColumnIndex = cursor.getColumnIndex(KEY_COUNTRY_ID);
         int nameColumnIndex = cursor.getColumnIndex(KEY_COUNTRY_NAME);
         int populationColumnIndex = cursor.getColumnIndex(KEY_POPULATION);
@@ -79,5 +81,7 @@ public class CountryTable {
             int population = cursor.getInt(populationColumnIndex);
             countries.add(new CountryModel(id, countryName, population));
         } while (cursor.moveToNext());
+
+        return countries;
     }
 }
