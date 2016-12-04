@@ -17,4 +17,22 @@
     <string name="capital_id">cap_id</string>
     <string name="capital_name">cap_name</string>
     <string name="capital_population">cap_population</string>
+
+    <string-array name="tables_array">
+        <item>Country</item>
+        <item>Language</item>
+        <item>Capital</item>
+        <item>CountryLanguages</item>
+    </string-array>
+
+    <string-array name="queries_array">
+        <item>Query1</item>
+        <item>Query2</item>
+        <item>Query3</item>
+        <item>Query4</item>
+        <item>Query5</item>
+        <item>Query6</item>
+        <item>Query7</item>
+        <item>Query8</item>
+    </string-array>
 </resources>

@@ -42,7 +42,7 @@ public class CountryLanguagesAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.country_languages_layout, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.country_languages_row, parent, false);
         return new CountryLanguagesHolder(itemView);
     }
 
