@@ -151,5 +151,9 @@ public class DbManagerPresenterImpl<T extends DbManagerPresenter.DbManagerView> 
     @Override
     public void destroy() {
         view = null;
+        countryUseCases.unsubscribe();
+        languageUseCases.unsubscribe();
+        capitalUseCases.unsubscribe();
+        countryLangsUseCases.unsubscribe();
     }
 }

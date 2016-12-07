@@ -28,4 +28,10 @@ public final class CountryLangsUseCases {
     public AddCountryLanguagesRecord getAddCountryLanguagesRecord() {
         return addCountryLanguagesRecord;
     }
+
+    public void unsubscribe() {
+        getAllCountryLangRecords.unsubscribe();
+        deleteCountryLanguagesRecord.unsubscribe();
+        addCountryLanguagesRecord.unsubscribe();
+    }
 }

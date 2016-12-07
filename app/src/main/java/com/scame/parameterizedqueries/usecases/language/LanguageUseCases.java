@@ -29,4 +29,10 @@ public final class LanguageUseCases {
     public AddLanguageRecord getAddLanguageRecord() {
         return addLanguageRecord;
     }
+
+    public void unsubscribe() {
+        getAllLanguagesRecords.unsubscribe();
+        deleteLanguageRecord.unsubscribe();
+        addLanguageRecord.unsubscribe();
+    }
 }

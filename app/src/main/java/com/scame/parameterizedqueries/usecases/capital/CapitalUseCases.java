@@ -29,4 +29,10 @@ public final class CapitalUseCases {
     public AddCapitalRecord getAddCapitalRecord() {
         return addCapitalRecord;
     }
+
+    public void unsubscribe() {
+        getAddCapitalRecord().unsubscribe();
+        deleteCapitalRecord.unsubscribe();
+        addCapitalRecord.unsubscribe();
+    }
 }

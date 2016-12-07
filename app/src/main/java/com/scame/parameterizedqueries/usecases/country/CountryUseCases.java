@@ -28,4 +28,10 @@ public final class CountryUseCases {
     public GetAllCountriesRecords getGetAllCountriesRecords() {
         return getAllCountriesRecords;
     }
+
+    public void unsubscribe() {
+        addCountryRecord.unsubscribe();
+        deleteCountryRecord.unsubscribe();
+        getAllCountriesRecords.unsubscribe();
+    }
 }
