@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import com.scame.parameterizedqueries.R;
@@ -15,15 +16,25 @@ import com.scame.parameterizedqueries.activities.TabsActivity;
 import com.scame.parameterizedqueries.adapters.CapitalAdapter;
 import com.scame.parameterizedqueries.adapters.CountryAdapter;
 import com.scame.parameterizedqueries.adapters.LanguageAdapter;
+import com.scame.parameterizedqueries.models.CapitalModel;
 import com.scame.parameterizedqueries.models.CountryLanguagesModel;
+import com.scame.parameterizedqueries.models.CountryModel;
+import com.scame.parameterizedqueries.models.LanguageModel;
 import com.scame.parameterizedqueries.presenters.DbManagerPresenter;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DbManagerFragment extends Fragment {
+public class DbManagerFragment extends Fragment implements DbManagerPresenter.DbManagerView {
+
+    private static final int COUNTRY_INDEX = 0;
+    private static final int LANGUAGE_INDEX = 1;
+    private static final int CAPITAL_INDEX = 2;
+    private static final int COUNTRY_LANGS_INDEX = 3;
 
     @BindView(R.id.db_manager_recycler)
     RecyclerView dbManagerRv;
@@ -45,19 +56,67 @@ public class DbManagerFragment extends Fragment {
 
     private CountryLanguagesModel countryLanguagesModel;
 
+    private String[] tablesArray;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.db_manager_layout, container, false);
         ButterKnife.bind(this, fragmentView);
         inject();
+        presenter.setView(this);
+        setupSpinnerListener();
+        tablesArray = getResources().getStringArray(R.array.tables_array);
 
         return fragmentView;
+    }
+
+    private void setupSpinnerListener() {
+        tablesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedTable = parent.getItemAtPosition(position).toString();
+
+                if (selectedTable.equals(tablesArray[COUNTRY_INDEX])) {
+                    presenter.requestCountryData();
+                } else if (selectedTable.equals(tablesArray[LANGUAGE_INDEX])) {
+                    presenter.requestLanguageData();
+                } else if (selectedTable.equals(tablesArray[CAPITAL_INDEX])) {
+                    presenter.requestCapitalData();
+                } else if (selectedTable.equals(tablesArray[COUNTRY_LANGS_INDEX])) {
+                    presenter.requestCountryLangsData();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void inject() {
         if (getActivity() instanceof TabsActivity) {
             ((TabsActivity) getActivity()).getDbManagerComponent().inject(this);
         }
+    }
+
+    @Override
+    public void displayCountryData(List<CountryModel> countries) {
+    }
+
+    @Override
+    public void displayCapitalData(List<CapitalModel> capitals) {
+
+    }
+
+    @Override
+    public void displayLanguageData(List<LanguageModel> languages) {
+
+    }
+
+    @Override
+    public void displayCountryLangsData(List<CountryLanguagesModel> countryLanguages) {
+
     }
 }
