@@ -13,6 +13,10 @@ public class CountryLangugesRepositoryImpl implements CountryLanguagesRepository
 
     private CountryLanguagesBridgeTable bridgeTable;
 
+    public CountryLangugesRepositoryImpl(CountryLanguagesBridgeTable bridgeTable) {
+        this.bridgeTable = bridgeTable;
+    }
+
     @Override
     public Completable addCountryLanguagesRecord(CountryLanguagesModel countryLanguagesModel) {
         bridgeTable.addRecord(countryLanguagesModel);

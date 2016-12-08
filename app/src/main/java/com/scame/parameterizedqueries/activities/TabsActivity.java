@@ -7,8 +7,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.scame.parameterizedqueries.DbApplication;
 import com.scame.parameterizedqueries.R;
 import com.scame.parameterizedqueries.adapters.DbPagerAdapter;
+import com.scame.parameterizedqueries.di.components.DaggerDbManagerComponent;
+import com.scame.parameterizedqueries.di.components.DbManagerComponent;
+import com.scame.parameterizedqueries.di.modules.DbManagerModule;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +28,8 @@ public class TabsActivity extends AppCompatActivity {
     @BindView(R.id.sliding_tabs)
     TabLayout tabLayout;
 
+    private DbManagerComponent dbManagerComponent;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,5 +42,15 @@ public class TabsActivity extends AppCompatActivity {
     private void setupPages() {
         viewPager.setAdapter(new DbPagerAdapter(getSupportFragmentManager(), this));
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    public DbManagerComponent getDbManagerComponent() {
+        if (dbManagerComponent == null) {
+            dbManagerComponent = DaggerDbManagerComponent.builder()
+                    .applicationComponent(DbApplication.getAppComponent())
+                    .dbManagerModule(new DbManagerModule())
+                    .build();
+        }
+        return dbManagerComponent;
     }
 }
