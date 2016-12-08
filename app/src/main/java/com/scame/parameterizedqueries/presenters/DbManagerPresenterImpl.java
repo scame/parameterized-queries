@@ -38,7 +38,10 @@ public class DbManagerPresenterImpl<T extends DbManagerPresenter.DbManagerView> 
     public void requestCountryData() {
         countryUseCases.getGetAllCountriesRecords().executeSingle(
                 countryModels -> {
-                    if (view != null) view.displayCountryData(countryModels);
+                    if (view != null) {
+                        countryModels.add(new CountryModel(-1, "", -1));
+                        view.displayCountryData(countryModels);
+                    }
                 },
                 throwable -> Log.i("onxCountryDataErr", throwable.getLocalizedMessage())
         );
@@ -48,7 +51,10 @@ public class DbManagerPresenterImpl<T extends DbManagerPresenter.DbManagerView> 
     public void requestCapitalData() {
         capitalUseCases.getGetAllCapitalsRecords().executeSingle(
                 capitalModels -> {
-                    if (view != null) view.displayCapitalData(capitalModels);
+                    if (view != null) {
+                        capitalModels.add(new CapitalModel(-1, -1, "", -1));
+                        view.displayCapitalData(capitalModels);
+                    }
                 }
                 , throwable -> Log.i("onxCapitalDataErr",  throwable.getLocalizedMessage()));
     }
@@ -57,7 +63,10 @@ public class DbManagerPresenterImpl<T extends DbManagerPresenter.DbManagerView> 
     public void requestLanguageData() {
         languageUseCases.getGetAllLanguagesRecords().executeSingle(
                 languageModels -> {
-                    if (view != null) view.displayLanguageData(languageModels);
+                    if (view != null) {
+                        languageModels.add(new LanguageModel(-1, "", -1, ""));
+                        view.displayLanguageData(languageModels);
+                    }
                 }
                 , throwable -> Log.i("onxLanguageDataErr", throwable.getLocalizedMessage()));
     }
@@ -66,7 +75,10 @@ public class DbManagerPresenterImpl<T extends DbManagerPresenter.DbManagerView> 
     public void requestCountryLangsData() {
         countryLangsUseCases.getGetAllCountryLangRecords().executeSingle(
                 countryLanguagesModels -> {
-                    if (view != null) view.displayCountryLangsData(countryLanguagesModels);
+                    if (view != null) {
+                        countryLanguagesModels.add(new CountryLanguagesModel(-1, -1, -1));
+                        view.displayCountryLangsData(countryLanguagesModels);
+                    }
                 }
                 , throwable -> Log.i("onxCountryLangsDataErr", throwable.getLocalizedMessage()));
     }

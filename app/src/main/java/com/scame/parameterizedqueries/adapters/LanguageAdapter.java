@@ -75,10 +75,12 @@ public class LanguageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     private void bindLanguagesHolder(LanguagesHolder languagesHolder, LanguageModel model) {
-        languagesHolder.languageId.setText(model.getId());
-        languagesHolder.languageName.setText(model.getName());
-        languagesHolder.languageFamily.setText(model.getLanguageFamily());
-        languagesHolder.nativeSpeakers.setText(model.getNativeSpeakers());
+        if (model.getId() != -1) {
+            languagesHolder.languageId.setText(String.valueOf(model.getId()));
+            languagesHolder.languageName.setText(model.getName());
+            languagesHolder.languageFamily.setText(model.getLanguageFamily());
+            languagesHolder.nativeSpeakers.setText(String.valueOf(model.getNativeSpeakers()));
+        }
     }
 
     @Override

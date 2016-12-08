@@ -72,9 +72,11 @@ public class CountryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private void bindCountriesHolder(CountriesHolder countriesHolder, CountryModel model) {
-        countriesHolder.countryId.setText(model.getId());
-        countriesHolder.countryName.setText(model.getName());
-        countriesHolder.countryPopulation.setText(model.getPopulation());
+        if (model.getId() != -1) {
+            countriesHolder.countryId.setText(String.valueOf(model.getId()));
+            countriesHolder.countryName.setText(model.getName());
+            countriesHolder.countryPopulation.setText(String.valueOf(model.getPopulation()));
+        }
     }
 
     @Override

@@ -75,10 +75,12 @@ public class CapitalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private void bindCapitalsHolder(CapitalsHolder capitalsHolder, CapitalModel model) {
-        capitalsHolder.capitalId.setText(model.getId());
-        capitalsHolder.countryId.setText(model.getCountryId());
-        capitalsHolder.capitalName.setText(model.getName());
-        capitalsHolder.capitalPopulation.setText(model.getPopulation());
+        if (model.getId() != -1) {
+            capitalsHolder.capitalId.setText(String.valueOf(model.getId()));
+            capitalsHolder.countryId.setText(String.valueOf(model.getCountryId()));
+            capitalsHolder.capitalName.setText(model.getName());
+            capitalsHolder.capitalPopulation.setText(String.valueOf(model.getPopulation()));
+        }
     }
 
     @Override

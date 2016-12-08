@@ -72,9 +72,11 @@ public class CountryLanguagesAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     private void bindCountryLanguagesHolder(CountryLanguagesHolder holder, CountryLanguagesModel model) {
-        holder.id.setText(model.getId());
-        holder.countryId.setText(model.getCountryId());
-        holder.languageId.setText(model.getLanguageId());
+        if (model.getId() != -1) {
+            holder.id.setText(String.valueOf(model.getId()));
+            holder.countryId.setText(String.valueOf(model.getCountryId()));
+            holder.languageId.setText(String.valueOf(model.getLanguageId()));
+        }
     }
 
     @Override
