@@ -17,6 +17,9 @@ import butterknife.ButterKnife;
 
 public class CountryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final int ITEM_VIEW_HEADER = 0;
+    private static final int ITEM_VIEW_DATA = 1;
+
     private List<CountryModel> countries;
 
     public CountryAdapter(List<CountryModel> countries) {
@@ -40,17 +43,35 @@ public class CountryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
+    private static class CountriesHeaderHolder extends RecyclerView.ViewHolder {
+        public CountriesHeaderHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.country_table_row, parent, false);
-        return new CountriesHolder(itemView);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        RecyclerView.ViewHolder viewHolder = null;
+
+        if (viewType == ITEM_VIEW_HEADER) {
+            View itemView = inflater.inflate(R.layout.country_table_header, parent, false);
+            viewHolder = new CountriesHeaderHolder(itemView);
+        } else if (viewType == ITEM_VIEW_DATA) {
+            View itemView = inflater.inflate(R.layout.country_table_row, parent, false);
+            viewHolder = new CountriesHolder(itemView);
+        }
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        CountriesHolder countriesHolder = ((CountriesHolder) holder);
-        CountryModel model = countries.get(position);
+        if (holder instanceof CountriesHolder) {
+            bindCountriesHolder((CountriesHolder) holder, countries.get(position - 1));
+        }
+    }
 
+    private void bindCountriesHolder(CountriesHolder countriesHolder, CountryModel model) {
         countriesHolder.countryId.setText(model.getId());
         countriesHolder.countryName.setText(model.getName());
         countriesHolder.countryPopulation.setText(model.getPopulation());
@@ -58,6 +79,11 @@ public class CountryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return countries == null ? 0 : countries.size();
+        return countries == null ? 1 : countries.size() + 1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position == 0 ? ITEM_VIEW_HEADER : ITEM_VIEW_DATA;
     }
 }

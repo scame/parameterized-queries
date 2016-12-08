@@ -17,6 +17,9 @@ import butterknife.ButterKnife;
 
 public class LanguageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final int ITEM_VIEW_HEADER = 0;
+    private static final int ITEM_VIEW_DATA = 1;
+
     private List<LanguageModel> languages;
 
     public LanguageAdapter(List<LanguageModel> languages) {
@@ -43,17 +46,35 @@ public class LanguageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
+    private static class LanguagesHeaderHolder extends RecyclerView.ViewHolder {
+        public LanguagesHeaderHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.language_table_row, parent, false);
-        return new LanguagesHolder(itemView);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        RecyclerView.ViewHolder viewHolder = null;
+
+        if (viewType == ITEM_VIEW_HEADER) {
+            View itemView = inflater.inflate(R.layout.language_table_header, parent, false);
+            viewHolder = new LanguagesHeaderHolder(itemView);
+        } else if (viewType == ITEM_VIEW_DATA) {
+            View itemView = inflater.inflate(R.layout.language_table_row, parent, false);
+            viewHolder = new LanguagesHolder(itemView);
+        }
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        LanguagesHolder languagesHolder = ((LanguagesHolder) holder);
-        LanguageModel model = languages.get(position);
+        if (holder instanceof LanguagesHolder) {
+            bindLanguagesHolder((LanguagesHolder) holder, languages.get(position - 1));
+        }
+    }
 
+    private void bindLanguagesHolder(LanguagesHolder languagesHolder, LanguageModel model) {
         languagesHolder.languageId.setText(model.getId());
         languagesHolder.languageName.setText(model.getName());
         languagesHolder.languageFamily.setText(model.getLanguageFamily());
@@ -62,6 +83,11 @@ public class LanguageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return languages == null ? 0 : languages.size();
+        return languages == null ? 1 : languages.size() + 1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position == 0 ? ITEM_VIEW_HEADER : ITEM_VIEW_DATA;
     }
 }

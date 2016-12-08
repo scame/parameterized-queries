@@ -17,6 +17,9 @@ import butterknife.ButterKnife;
 
 public class CountryLanguagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final int ITEM_VIEW_HEADER = 0;
+    private static final int ITEM_VIEW_DATA = 1;
+
     private List<CountryLanguagesModel> countryLanguages;
 
     public CountryLanguagesAdapter(List<CountryLanguagesModel> countryLanguages) {
@@ -40,24 +43,47 @@ public class CountryLanguagesAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
+    private static class CountryLanguagesHeaderHolder extends RecyclerView.ViewHolder {
+        public CountryLanguagesHeaderHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.country_languages_row, parent, false);
-        return new CountryLanguagesHolder(itemView);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        RecyclerView.ViewHolder viewHolder = null;
+
+        if (viewType == ITEM_VIEW_HEADER) {
+            View itemView = inflater.inflate(R.layout.country_languages_header, parent, false);
+            viewHolder = new CountryLanguagesHeaderHolder(itemView);
+        } else if (viewType == ITEM_VIEW_DATA) {
+            View itemView = inflater.inflate(R.layout.country_languages_row, parent, false);
+            viewHolder = new CountryLanguagesHolder(itemView);
+        }
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        CountryLanguagesHolder countryLanguagesHolder = ((CountryLanguagesHolder) holder);
-        CountryLanguagesModel model = countryLanguages.get(position);
+        if (holder instanceof CountryLanguagesHolder) {
+            bindCountryLanguagesHolder((CountryLanguagesHolder) holder, countryLanguages.get(position - 1));
+        }
+    }
 
-        countryLanguagesHolder.id.setText(model.getId());
-        countryLanguagesHolder.countryId.setText(model.getCountryId());
-        countryLanguagesHolder.languageId.setText(model.getLanguageId());
+    private void bindCountryLanguagesHolder(CountryLanguagesHolder holder, CountryLanguagesModel model) {
+        holder.id.setText(model.getId());
+        holder.countryId.setText(model.getCountryId());
+        holder.languageId.setText(model.getLanguageId());
     }
 
     @Override
     public int getItemCount() {
-        return countryLanguages == null ? 0 : countryLanguages.size();
+        return countryLanguages == null ? 1 : countryLanguages.size() + 1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position == 0 ? ITEM_VIEW_HEADER : ITEM_VIEW_DATA;
     }
 }

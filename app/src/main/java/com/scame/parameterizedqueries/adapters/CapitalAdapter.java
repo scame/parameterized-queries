@@ -17,6 +17,9 @@ import butterknife.ButterKnife;
 
 public class CapitalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final int ITEM_VIEW_HEADER = 0;
+    private static final int ITEM_VIEW_DATA = 1;
+
     private List<CapitalModel> capitals;
 
     public CapitalAdapter(List<CapitalModel> capitals) {
@@ -43,17 +46,35 @@ public class CapitalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    @Override
+    private static class CapitalsHeaderHolder extends RecyclerView.ViewHolder {
+        public CapitalsHeaderHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.capital_table_row, parent, false);
-        return new CapitalsHolder(itemView);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        RecyclerView.ViewHolder viewHolder = null;
+
+        if (viewType == ITEM_VIEW_HEADER) {
+            View itemView = inflater.inflate(R.layout.capital_table_header, parent, false);
+            viewHolder = new CapitalsHeaderHolder(itemView);
+        } else if (viewType == ITEM_VIEW_DATA) {
+            View itemView = inflater.inflate(R.layout.capital_table_row, parent, false);
+            viewHolder = new CapitalsHolder(itemView);
+        }
+
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        CapitalsHolder capitalsHolder = ((CapitalsHolder) holder);
-        CapitalModel model = capitals.get(position);
+        if (holder instanceof CapitalsHolder) {
+            bindCapitalsHolder((CapitalsHolder) holder, capitals.get(position - 1));
+        }
+    }
 
+    private void bindCapitalsHolder(CapitalsHolder capitalsHolder, CapitalModel model) {
         capitalsHolder.capitalId.setText(model.getId());
         capitalsHolder.countryId.setText(model.getCountryId());
         capitalsHolder.capitalName.setText(model.getName());
@@ -62,6 +83,11 @@ public class CapitalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return capitals == null ? 0 : capitals.size();
+        return capitals == null ? 1 : capitals.size() + 1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position == 0 ? ITEM_VIEW_HEADER : ITEM_VIEW_DATA;
     }
 }
