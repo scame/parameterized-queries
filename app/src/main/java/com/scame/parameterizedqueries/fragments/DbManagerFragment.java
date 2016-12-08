@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,7 +113,6 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
 
     @Override
     public void displayCountryData(List<CountryModel> countries) {
-        Log.i("onxCountryData", countries.size() + "");
         this.countries = countries;
         countryAdapter = new CountryAdapter(countries);
         initRecycler(countryAdapter);
@@ -122,7 +120,6 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
 
     @Override
     public void displayCapitalData(List<CapitalModel> capitals) {
-        Log.i("onxCapitalData", capitals.size() + "");
         this.capitals = capitals;
         capitalAdapter = new CapitalAdapter(capitals);
         initRecycler(capitalAdapter);
@@ -130,7 +127,6 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
 
     @Override
     public void displayLanguageData(List<LanguageModel> languages) {
-        Log.i("onxLang", languages.size() + "");
         this.languages = languages;
         languageAdapter = new LanguageAdapter(languages);
         initRecycler(languageAdapter);
@@ -138,7 +134,6 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
 
     @Override
     public void displayCountryLangsData(List<CountryLanguagesModel> countryLanguages) {
-        Log.i("onxCountryLangs", countryLanguages.size() + "");
         this.countryLanguages = countryLanguages;
         countryLanguagesAdapter = new CountryLanguagesAdapter(countryLanguages);
         initRecycler(countryLanguagesAdapter);

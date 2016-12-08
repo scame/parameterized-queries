@@ -76,6 +76,9 @@ public class CountryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             countriesHolder.countryId.setText(String.valueOf(model.getId()));
             countriesHolder.countryName.setText(model.getName());
             countriesHolder.countryPopulation.setText(String.valueOf(model.getPopulation()));
+        } else {
+            countriesHolder.countryId.setFocusable(false);
+            countriesHolder.countryId.setClickable(false);
         }
     }
 

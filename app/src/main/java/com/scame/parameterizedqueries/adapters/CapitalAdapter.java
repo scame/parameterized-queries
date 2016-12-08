@@ -80,6 +80,9 @@ public class CapitalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             capitalsHolder.countryId.setText(String.valueOf(model.getCountryId()));
             capitalsHolder.capitalName.setText(model.getName());
             capitalsHolder.capitalPopulation.setText(String.valueOf(model.getPopulation()));
+        } else {
+            capitalsHolder.capitalId.setFocusable(false);
+            capitalsHolder.capitalId.setClickable(false);
         }
     }
 

@@ -76,6 +76,9 @@ public class CountryLanguagesAdapter extends RecyclerView.Adapter<RecyclerView.V
             holder.id.setText(String.valueOf(model.getId()));
             holder.countryId.setText(String.valueOf(model.getCountryId()));
             holder.languageId.setText(String.valueOf(model.getLanguageId()));
+        } else {
+            holder.id.setFocusable(false);
+            holder.id.setClickable(false);
         }
     }
 
