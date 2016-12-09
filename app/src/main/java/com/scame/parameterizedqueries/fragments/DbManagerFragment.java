@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.scame.parameterizedqueries.models.CountryModel;
 import com.scame.parameterizedqueries.models.LanguageModel;
 import com.scame.parameterizedqueries.presenters.DbManagerPresenter;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -58,13 +60,13 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
 
     private CountryLanguagesAdapter countryLanguagesAdapter;
 
-    private List<CapitalModel> capitals;
+    private List<CapitalModel> capitals = Collections.emptyList();
 
-    private List<CountryModel> countries;
+    private List<CountryModel> countries = Collections.emptyList();
 
-    private List<LanguageModel> languages;
+    private List<LanguageModel> languages = Collections.emptyList();
 
-    private List<CountryLanguagesModel> countryLanguages;
+    private List<CountryLanguagesModel> countryLanguages = Collections.emptyList();
 
     private String[] tablesArray;
 
@@ -76,9 +78,69 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
         inject();
         presenter.setView(this);
         setupSpinnerListener();
+        setupItemTouchHelper();
         tablesArray = getResources().getStringArray(R.array.tables_array);
 
         return fragmentView;
+    }
+
+    private void setupItemTouchHelper() {
+        ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int adapterPosition = viewHolder.getAdapterPosition();
+
+                String selectedTable = tablesSpinner.getSelectedItem().toString();
+                if (selectedTable.equals(tablesArray[COUNTRY_INDEX])) {
+                    countries.remove(adapterPosition - 1);
+                    countryAdapter.notifyItemRemoved(adapterPosition);
+
+                } else if (selectedTable.equals(tablesArray[LANGUAGE_INDEX])) {
+                    languages.remove(adapterPosition - 1);
+                    languageAdapter.notifyItemRemoved(adapterPosition);
+
+                } else if (selectedTable.equals(tablesArray[CAPITAL_INDEX])) {
+                    capitals.remove(adapterPosition - 1);
+                    capitalAdapter.notifyItemRemoved(adapterPosition);
+
+                } else if (selectedTable.equals(tablesArray[COUNTRY_LANGS_INDEX])) {
+                    countryLanguages.remove(adapterPosition - 1);
+                    countryLanguagesAdapter.notifyItemRemoved(adapterPosition);
+                }
+            }
+
+            @Override
+            public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                if (isNotSwipeable(viewHolder.getAdapterPosition())) {
+                    return 0;
+                }
+                return super.getSwipeDirs(recyclerView, viewHolder);
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(dbManagerRv);
+    }
+
+    private boolean isNotSwipeable(int adapterPosition) {
+        if (adapterPosition == 0) return true;
+
+        String selectedTable = tablesSpinner.getSelectedItem().toString();
+        if (selectedTable.equals(tablesArray[COUNTRY_INDEX])) {
+            if (countries.size() == adapterPosition) return true;
+        } else if (selectedTable.equals(tablesArray[LANGUAGE_INDEX])) {
+            if (languages.size() == adapterPosition) return true;
+        } else if (selectedTable.equals(tablesArray[CAPITAL_INDEX])) {
+            if (capitals.size() == adapterPosition) return true;
+        } else if (selectedTable.equals(tablesArray[COUNTRY_LANGS_INDEX])) {
+            if (countryLanguages.size() == adapterPosition) return true;
+        }
+        return false;
     }
 
     private void setupSpinnerListener() {
