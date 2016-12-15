@@ -63,7 +63,8 @@ public class CapitalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         public CapitalModel getCapitalModel() {
-            return new CapitalModel(0, Integer.valueOf(countryId.getText().toString()),
+            int id = capitalId.getText().toString().isEmpty() ? 0 : Integer.valueOf(capitalId.getText().toString());
+            return new CapitalModel(id, Integer.valueOf(countryId.getText().toString()),
                     capitalName.getText().toString(),
                     Integer.valueOf(capitalPopulation.getText().toString()));
         }

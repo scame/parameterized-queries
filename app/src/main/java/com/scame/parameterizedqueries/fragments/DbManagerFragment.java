@@ -255,23 +255,58 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
     }
 
     private void handleCountryLangsUpdate() {
-
+        CountryLanguagesAdapter.CountryLanguagesHolder holder = (CountryLanguagesAdapter.CountryLanguagesHolder) dbManagerRv
+                .findViewHolderForAdapterPosition(editedItemPosition);
+        if (holder.validate()) {
+            presenter.updateCountryLangsRecord(holder.getCountryLanguagesModel());
+            presenter.requestCountryLangsData();
+        } else {
+            Toast.makeText(getContext(), "Validation failure", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void handleCountryLangsInsert() {
-
+        CountryLanguagesAdapter.CountryLanguagesHolder holder = (CountryLanguagesAdapter.CountryLanguagesHolder) dbManagerRv
+                .findViewHolderForAdapterPosition(editedItemPosition);
+        if (holder.validate()) {
+            presenter.addCountryLangsRecord(holder.getCountryLanguagesModel());
+            presenter.requestCountryLangsData();
+        } else {
+            Toast.makeText(getContext(), "Validation failure", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void handleCapitalUpdate() {
-
+        CapitalAdapter.CapitalsHolder holder = (CapitalAdapter.CapitalsHolder) dbManagerRv
+                .findViewHolderForAdapterPosition(editedItemPosition);
+        if (holder.validate()) {
+            presenter.updateCapitalRecord(holder.getCapitalModel());
+            presenter.requestCapitalData();
+        } else {
+            Toast.makeText(getContext(), "Validation failure", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void handleCapitalInsert() {
-
+        CapitalAdapter.CapitalsHolder holder = (CapitalAdapter.CapitalsHolder) dbManagerRv
+                .findViewHolderForAdapterPosition(editedItemPosition);
+        if (holder.validate()) {
+            presenter.addCapitalRecord(holder.getCapitalModel());
+            presenter.requestCapitalData();
+        } else {
+            Toast.makeText(getContext(), "Validation failure", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void handleLanguageUpdate() {
-
+        LanguageAdapter.LanguagesHolder holder = (LanguageAdapter.LanguagesHolder) dbManagerRv
+                .findViewHolderForAdapterPosition(editedItemPosition);
+        if (holder.validate()) {
+            presenter.updateLanguageRecord(holder.getLanguageModel());
+            presenter.requestLanguageData();
+        } else {
+            Toast.makeText(getContext(), "Validation failure", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void handleLanguageInsert() {
@@ -300,7 +335,8 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
         CountryAdapter.CountriesHolder holder = (CountryAdapter.CountriesHolder) dbManagerRv
                 .findViewHolderForAdapterPosition(editedItemPosition);
         if (holder.validate()) {
-
+            presenter.updateCountryRecord(holder.getCountryModel());
+            presenter.requestCountryData();
         } else {
             Toast.makeText(getContext(), "Validation failure", Toast.LENGTH_LONG).show();
         }

@@ -4,6 +4,7 @@ package com.scame.parameterizedqueries.sqlite;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.scame.parameterizedqueries.models.CountryModel;
 
@@ -54,7 +55,7 @@ public class CountryTable {
 
     public int updateRecord(CountryModel countryModel) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
-
+        Log.i("onxUpdating", countryModel.getId() + " " + countryModel.getName() + " " + countryModel.getPopulation());
         ContentValues values = new ContentValues();
         values.put(KEY_COUNTRY_NAME, countryModel.getName());
         values.put(KEY_POPULATION, countryModel.getPopulation());

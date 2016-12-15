@@ -63,7 +63,8 @@ public class LanguageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
 
         public LanguageModel getLanguageModel() {
-            return new LanguageModel(0, languageName.getText().toString(),
+            int id = languageId.getText().toString().isEmpty() ? 0 : Integer.valueOf(languageId.getText().toString());
+            return new LanguageModel(id, languageName.getText().toString(),
                     Integer.valueOf(nativeSpeakers.getText().toString()),
                     languageFamily.getText().toString());
         }

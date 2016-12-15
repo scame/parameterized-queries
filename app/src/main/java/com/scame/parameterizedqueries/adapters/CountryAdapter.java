@@ -58,7 +58,8 @@ public class CountryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         public CountryModel getCountryModel() {
-            return new CountryModel(0, countryName.getText().toString(),
+            int id = countryId.getText().toString().isEmpty() ? 0 : Integer.valueOf(countryId.getText().toString());
+            return new CountryModel(id, countryName.getText().toString(),
                     Integer.valueOf(countryPopulation.getText().toString()));
         }
     }

@@ -58,7 +58,8 @@ public class CountryLanguagesAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
 
         public CountryLanguagesModel getCountryLanguagesModel() {
-            return new CountryLanguagesModel(0, Integer.valueOf(countryId.getText().toString()),
+            int id = this.id.getText().toString().isEmpty() ? 0 : Integer.valueOf(this.id.getText().toString());
+            return new CountryLanguagesModel(id, Integer.valueOf(countryId.getText().toString()),
                     Integer.valueOf(languageId.getText().toString()));
         }
     }

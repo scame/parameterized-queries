@@ -14,18 +14,22 @@ import com.scame.parameterizedqueries.usecases.capital.AddCapitalRecord;
 import com.scame.parameterizedqueries.usecases.capital.CapitalUseCases;
 import com.scame.parameterizedqueries.usecases.capital.DeleteCapitalRecord;
 import com.scame.parameterizedqueries.usecases.capital.GetAllCapitalsRecords;
+import com.scame.parameterizedqueries.usecases.capital.UpdateCapitalRecord;
 import com.scame.parameterizedqueries.usecases.country.AddCountryRecord;
 import com.scame.parameterizedqueries.usecases.country.CountryUseCases;
 import com.scame.parameterizedqueries.usecases.country.DeleteCountryRecord;
 import com.scame.parameterizedqueries.usecases.country.GetAllCountriesRecords;
+import com.scame.parameterizedqueries.usecases.country.UpdateCountryRecord;
 import com.scame.parameterizedqueries.usecases.country_lang.AddCountryLanguagesRecord;
 import com.scame.parameterizedqueries.usecases.country_lang.CountryLangsUseCases;
 import com.scame.parameterizedqueries.usecases.country_lang.DeleteCountryLanguagesRecord;
 import com.scame.parameterizedqueries.usecases.country_lang.GetAllCountryLangRecords;
+import com.scame.parameterizedqueries.usecases.country_lang.UpdateCountryLanguagesRecord;
 import com.scame.parameterizedqueries.usecases.language.AddLanguageRecord;
 import com.scame.parameterizedqueries.usecases.language.DeleteLanguageRecord;
 import com.scame.parameterizedqueries.usecases.language.GetAllLanguagesRecords;
 import com.scame.parameterizedqueries.usecases.language.LanguageUseCases;
+import com.scame.parameterizedqueries.usecases.language.UpdateLanguageRecord;
 
 import dagger.Module;
 import dagger.Provides;
@@ -44,10 +48,19 @@ public class DbManagerModule {
 
     @Provides
     @PerActivity
-    CountryUseCases proideCountryUseCases(GetAllCountriesRecords getAllCountriesRecords,
+    CountryUseCases provideCountryUseCases(GetAllCountriesRecords getAllCountriesRecords,
                                           DeleteCountryRecord deleteCountryRecord,
-                                          AddCountryRecord addCountryRecord) {
-        return new CountryUseCases(getAllCountriesRecords, deleteCountryRecord, addCountryRecord);
+                                          AddCountryRecord addCountryRecord,
+                                           UpdateCountryRecord updateCountryRecord) {
+        return new CountryUseCases(getAllCountriesRecords, deleteCountryRecord, addCountryRecord,
+                updateCountryRecord);
+    }
+
+    @Provides
+    @PerActivity
+    UpdateCountryRecord provideUpdateCountryRecord(SubscribeOn subscribeOn, ObserveOn observeOn,
+                                                   CountryRepository countryRepository) {
+        return new UpdateCountryRecord(subscribeOn, observeOn, countryRepository);
     }
 
     @Provides
@@ -75,8 +88,17 @@ public class DbManagerModule {
     @PerActivity
     CapitalUseCases provideCapitalUseCases(GetAllCapitalsRecords getAllCapitalsRecords,
                                            DeleteCapitalRecord deleteCapitalRecord,
-                                           AddCapitalRecord addCapitalRecord) {
-        return new CapitalUseCases(getAllCapitalsRecords, deleteCapitalRecord, addCapitalRecord);
+                                           AddCapitalRecord addCapitalRecord,
+                                           UpdateCapitalRecord updateCapitalRecord) {
+        return new CapitalUseCases(getAllCapitalsRecords, deleteCapitalRecord, addCapitalRecord,
+                updateCapitalRecord);
+    }
+
+    @Provides
+    @PerActivity
+    UpdateCapitalRecord provideUpdateCapitalRecord(SubscribeOn subscribeOn, ObserveOn observeOn,
+                                                   CapitalRepository capitalRepository) {
+        return new UpdateCapitalRecord(subscribeOn, observeOn, capitalRepository);
     }
 
     @Provides
@@ -104,8 +126,17 @@ public class DbManagerModule {
     @PerActivity
     LanguageUseCases provideLanguageUseCases(GetAllLanguagesRecords getAllLanguagesRecords,
                                              DeleteLanguageRecord deleteLanguageRecord,
-                                             AddLanguageRecord addLanguageRecord) {
-        return new LanguageUseCases(getAllLanguagesRecords, deleteLanguageRecord, addLanguageRecord);
+                                             AddLanguageRecord addLanguageRecord,
+                                             UpdateLanguageRecord updateLanguageRecord) {
+        return new LanguageUseCases(getAllLanguagesRecords, deleteLanguageRecord, addLanguageRecord,
+                updateLanguageRecord);
+    }
+
+    @Provides
+    @PerActivity
+    UpdateLanguageRecord provideUpdateLanguageRecord(SubscribeOn subscribeOn, ObserveOn observeOn,
+                                                     LanguageRepository languageRepository) {
+        return new UpdateLanguageRecord(subscribeOn, observeOn, languageRepository);
     }
 
     @Provides
@@ -133,8 +164,17 @@ public class DbManagerModule {
     @PerActivity
     CountryLangsUseCases provideCountryLangsUseCases(GetAllCountryLangRecords getAllCountryLangRecords,
                                                      DeleteCountryLanguagesRecord deleteCountryLanguagesRecord,
-                                                     AddCountryLanguagesRecord addCountryLanguagesRecord) {
-        return new CountryLangsUseCases(getAllCountryLangRecords, deleteCountryLanguagesRecord, addCountryLanguagesRecord);
+                                                     AddCountryLanguagesRecord addCountryLanguagesRecord,
+                                                     UpdateCountryLanguagesRecord updateCountryLanguagesRecord) {
+        return new CountryLangsUseCases(getAllCountryLangRecords, deleteCountryLanguagesRecord, addCountryLanguagesRecord,
+                updateCountryLanguagesRecord);
+    }
+
+    @Provides
+    @PerActivity
+    UpdateCountryLanguagesRecord provideUpdateCountryLangsRecord(SubscribeOn subscribeOn, ObserveOn observeOn,
+                                                                 CountryLanguagesRepository countryLanguagesRepository) {
+        return new UpdateCountryLanguagesRecord(subscribeOn, observeOn, countryLanguagesRepository);
     }
 
     @Provides
