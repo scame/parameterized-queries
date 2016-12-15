@@ -7,7 +7,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,6 +22,7 @@ import com.scame.parameterizedqueries.adapters.CapitalAdapter;
 import com.scame.parameterizedqueries.adapters.CountryAdapter;
 import com.scame.parameterizedqueries.adapters.CountryLanguagesAdapter;
 import com.scame.parameterizedqueries.adapters.LanguageAdapter;
+import com.scame.parameterizedqueries.adapters.TextChangedListener;
 import com.scame.parameterizedqueries.models.CapitalModel;
 import com.scame.parameterizedqueries.models.CountryLanguagesModel;
 import com.scame.parameterizedqueries.models.CountryModel;
@@ -51,6 +55,8 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
 
     @Inject
     DbManagerPresenter<DbManagerPresenter.DbManagerView> presenter;
+
+    private ActionMode currentActionMode;
 
     private CapitalAdapter capitalAdapter;
 
@@ -94,25 +100,10 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int adapterPosition = viewHolder.getAdapterPosition();
-
                 String selectedTable = tablesSpinner.getSelectedItem().toString();
-                if (selectedTable.equals(tablesArray[COUNTRY_INDEX])) {
-                    countries.remove(adapterPosition - 1);
-                    countryAdapter.notifyItemRemoved(adapterPosition);
-
-                } else if (selectedTable.equals(tablesArray[LANGUAGE_INDEX])) {
-                    languages.remove(adapterPosition - 1);
-                    languageAdapter.notifyItemRemoved(adapterPosition);
-
-                } else if (selectedTable.equals(tablesArray[CAPITAL_INDEX])) {
-                    capitals.remove(adapterPosition - 1);
-                    capitalAdapter.notifyItemRemoved(adapterPosition);
-
-                } else if (selectedTable.equals(tablesArray[COUNTRY_LANGS_INDEX])) {
-                    countryLanguages.remove(adapterPosition - 1);
-                    countryLanguagesAdapter.notifyItemRemoved(adapterPosition);
-                }
+                processSwipedItem(selectedTable, adapterPosition);
             }
+
 
             @Override
             public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
@@ -125,6 +116,25 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(dbManagerRv);
+    }
+
+    private void processSwipedItem(String selectedTable, int adapterPosition) {
+        if (selectedTable.equals(tablesArray[COUNTRY_INDEX])) {
+            countries.remove(adapterPosition - 1);
+            countryAdapter.notifyItemRemoved(adapterPosition);
+
+        } else if (selectedTable.equals(tablesArray[LANGUAGE_INDEX])) {
+            languages.remove(adapterPosition - 1);
+            languageAdapter.notifyItemRemoved(adapterPosition);
+
+        } else if (selectedTable.equals(tablesArray[CAPITAL_INDEX])) {
+            capitals.remove(adapterPosition - 1);
+            capitalAdapter.notifyItemRemoved(adapterPosition);
+
+        } else if (selectedTable.equals(tablesArray[COUNTRY_LANGS_INDEX])) {
+            countryLanguages.remove(adapterPosition - 1);
+            countryLanguagesAdapter.notifyItemRemoved(adapterPosition);
+        }
     }
 
     private boolean isNotSwipeable(int adapterPosition) {
@@ -167,6 +177,41 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
         });
     }
 
+    private ActionMode.Callback modeCallBack = new ActionMode.Callback() {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.setTitle("Actions");
+            mode.getMenuInflater().inflate(R.menu.actions_menu, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.menu_edit:
+                    mode.finish();
+                    return true;
+                case R.id.menu_cancel:
+                    mode.finish();
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            currentActionMode = null;
+        }
+    };
+
+
     private void inject() {
         if (getActivity() instanceof TabsActivity) {
             ((TabsActivity) getActivity()).getDbManagerComponent().inject(this);
@@ -176,28 +221,28 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
     @Override
     public void displayCountryData(List<CountryModel> countries) {
         this.countries = countries;
-        countryAdapter = new CountryAdapter(countries);
+        countryAdapter = new CountryAdapter(countries, textListener);
         initRecycler(countryAdapter);
     }
 
     @Override
     public void displayCapitalData(List<CapitalModel> capitals) {
         this.capitals = capitals;
-        capitalAdapter = new CapitalAdapter(capitals);
+        capitalAdapter = new CapitalAdapter(capitals, textListener);
         initRecycler(capitalAdapter);
     }
 
     @Override
     public void displayLanguageData(List<LanguageModel> languages) {
         this.languages = languages;
-        languageAdapter = new LanguageAdapter(languages);
+        languageAdapter = new LanguageAdapter(languages, textListener);
         initRecycler(languageAdapter);
     }
 
     @Override
     public void displayCountryLangsData(List<CountryLanguagesModel> countryLanguages) {
         this.countryLanguages = countryLanguages;
-        countryLanguagesAdapter = new CountryLanguagesAdapter(countryLanguages);
+        countryLanguagesAdapter = new CountryLanguagesAdapter(countryLanguages, textListener);
         initRecycler(countryLanguagesAdapter);
     }
 
@@ -205,4 +250,10 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
         dbManagerRv.setAdapter(adapter);
         dbManagerRv.setLayoutManager(new LinearLayoutManager(getContext()));
     }
+
+    private final TextChangedListener textListener = (adapterPosition, length) -> {
+        if (currentActionMode == null) {
+            currentActionMode = toolbar.startActionMode(modeCallBack);
+        }
+    };
 }

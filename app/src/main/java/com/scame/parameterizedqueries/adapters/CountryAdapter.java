@@ -22,8 +22,11 @@ public class CountryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private List<CountryModel> countries;
 
-    public CountryAdapter(List<CountryModel> countries) {
+    private TextChangedListener textListener;
+
+    public CountryAdapter(List<CountryModel> countries, TextChangedListener textListener) {
         this.countries = countries;
+        this.textListener = textListener;
     }
 
     static class CountriesHolder extends RecyclerView.ViewHolder {
@@ -37,9 +40,16 @@ public class CountryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @BindView(R.id.country_population_tv)
         EditText countryPopulation;
 
-        public CountriesHolder(View itemView) {
+        private EditTextWatcher editTextWatcher;
+
+        public CountriesHolder(View itemView, TextChangedListener textListener) {
             super(itemView);
+            editTextWatcher = new EditTextWatcher(textListener, this);
             ButterKnife.bind(this, itemView);
+
+            countryId.addTextChangedListener(editTextWatcher);
+            countryName.addTextChangedListener(editTextWatcher);
+            countryPopulation.addTextChangedListener(editTextWatcher);
         }
     }
 
@@ -59,7 +69,7 @@ public class CountryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             viewHolder = new CountriesHeaderHolder(itemView);
         } else if (viewType == ITEM_VIEW_DATA) {
             View itemView = inflater.inflate(R.layout.country_table_row, parent, false);
-            viewHolder = new CountriesHolder(itemView);
+            viewHolder = new CountriesHolder(itemView, textListener);
         }
         return viewHolder;
     }
@@ -76,9 +86,6 @@ public class CountryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             countriesHolder.countryId.setText(String.valueOf(model.getId()));
             countriesHolder.countryName.setText(model.getName());
             countriesHolder.countryPopulation.setText(String.valueOf(model.getPopulation()));
-        } else {
-            countriesHolder.countryId.setFocusable(false);
-            countriesHolder.countryId.setClickable(false);
         }
     }
 

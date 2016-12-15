@@ -22,8 +22,11 @@ public class LanguageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private List<LanguageModel> languages;
 
-    public LanguageAdapter(List<LanguageModel> languages) {
+    private TextChangedListener textListener;
+
+    public LanguageAdapter(List<LanguageModel> languages, TextChangedListener textListener) {
         this.languages = languages;
+        this.textListener = textListener;
     }
 
     static class LanguagesHolder extends RecyclerView.ViewHolder {
@@ -40,9 +43,17 @@ public class LanguageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         @BindView(R.id.language_family_tv)
         EditText languageFamily;
 
-        public LanguagesHolder(View itemView) {
+        private EditTextWatcher editTextWatcher;
+
+        public LanguagesHolder(View itemView, TextChangedListener textListener) {
             super(itemView);
+            editTextWatcher = new EditTextWatcher(textListener, this);
             ButterKnife.bind(this, itemView);
+
+            languageId.addTextChangedListener(editTextWatcher);
+            languageName.addTextChangedListener(editTextWatcher);
+            nativeSpeakers.addTextChangedListener(editTextWatcher);
+            languageFamily.addTextChangedListener(editTextWatcher);
         }
     }
 
@@ -62,7 +73,7 @@ public class LanguageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder = new LanguagesHeaderHolder(itemView);
         } else if (viewType == ITEM_VIEW_DATA) {
             View itemView = inflater.inflate(R.layout.language_table_row, parent, false);
-            viewHolder = new LanguagesHolder(itemView);
+            viewHolder = new LanguagesHolder(itemView, textListener);
         }
         return viewHolder;
     }
@@ -80,9 +91,6 @@ public class LanguageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             languagesHolder.languageName.setText(model.getName());
             languagesHolder.languageFamily.setText(model.getLanguageFamily());
             languagesHolder.nativeSpeakers.setText(String.valueOf(model.getNativeSpeakers()));
-        } else {
-            languagesHolder.languageId.setClickable(true);
-            languagesHolder.languageId.setFocusable(true);
         }
     }
 

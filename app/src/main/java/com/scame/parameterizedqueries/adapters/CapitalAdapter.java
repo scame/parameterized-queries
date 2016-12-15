@@ -20,10 +20,13 @@ public class CapitalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int ITEM_VIEW_HEADER = 0;
     private static final int ITEM_VIEW_DATA = 1;
 
+    private TextChangedListener textListener;
+
     private List<CapitalModel> capitals;
 
-    public CapitalAdapter(List<CapitalModel> capitals) {
+    public CapitalAdapter(List<CapitalModel> capitals, TextChangedListener textListener) {
         this.capitals = capitals;
+        this.textListener = textListener;
     }
 
     static class CapitalsHolder extends RecyclerView.ViewHolder {
@@ -40,9 +43,17 @@ public class CapitalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @BindView(R.id.capital_population_tv)
         EditText capitalPopulation;
 
-        public CapitalsHolder(View itemView) {
+        private EditTextWatcher editTextWatcher;
+
+        public CapitalsHolder(View itemView, TextChangedListener textListener) {
             super(itemView);
+            editTextWatcher = new EditTextWatcher(textListener, this);
             ButterKnife.bind(this, itemView);
+
+            capitalId.addTextChangedListener(editTextWatcher);
+            countryId.addTextChangedListener(editTextWatcher);
+            capitalName.addTextChangedListener(editTextWatcher);
+            capitalPopulation.addTextChangedListener(editTextWatcher);
         }
     }
 
@@ -61,7 +72,7 @@ public class CapitalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             viewHolder = new CapitalsHeaderHolder(itemView);
         } else if (viewType == ITEM_VIEW_DATA) {
             View itemView = inflater.inflate(R.layout.capital_table_row, parent, false);
-            viewHolder = new CapitalsHolder(itemView);
+            viewHolder = new CapitalsHolder(itemView, textListener);
         }
 
         return viewHolder;
@@ -76,14 +87,15 @@ public class CapitalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private void bindCapitalsHolder(CapitalsHolder capitalsHolder, CapitalModel model) {
         if (model.getId() != -1) {
-            capitalsHolder.capitalId.setText(String.valueOf(model.getId()));
-            capitalsHolder.countryId.setText(String.valueOf(model.getCountryId()));
-            capitalsHolder.capitalName.setText(model.getName());
-            capitalsHolder.capitalPopulation.setText(String.valueOf(model.getPopulation()));
-        } else {
-            capitalsHolder.capitalId.setFocusable(false);
-            capitalsHolder.capitalId.setClickable(false);
+            populateView(capitalsHolder, model);
         }
+    }
+
+    private void populateView(CapitalsHolder capitalsHolder, CapitalModel model) {
+        capitalsHolder.capitalId.setText(String.valueOf(model.getId()));
+        capitalsHolder.countryId.setText(String.valueOf(model.getCountryId()));
+        capitalsHolder.capitalName.setText(model.getName());
+        capitalsHolder.capitalPopulation.setText(String.valueOf(model.getPopulation()));
     }
 
     @Override

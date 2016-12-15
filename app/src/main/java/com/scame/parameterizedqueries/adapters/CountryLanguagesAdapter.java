@@ -22,8 +22,11 @@ public class CountryLanguagesAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     private List<CountryLanguagesModel> countryLanguages;
 
-    public CountryLanguagesAdapter(List<CountryLanguagesModel> countryLanguages) {
+    private TextChangedListener textListener;
+
+    public CountryLanguagesAdapter(List<CountryLanguagesModel> countryLanguages, TextChangedListener textListener) {
         this.countryLanguages = countryLanguages;
+        this.textListener = textListener;
     }
 
     static class CountryLanguagesHolder extends RecyclerView.ViewHolder {
@@ -37,9 +40,16 @@ public class CountryLanguagesAdapter extends RecyclerView.Adapter<RecyclerView.V
         @BindView(R.id.language_id_tv)
         EditText languageId;
 
-        public CountryLanguagesHolder(View itemView) {
+        private EditTextWatcher editTextWatcher;
+
+        public CountryLanguagesHolder(View itemView, TextChangedListener textListener) {
             super(itemView);
+            editTextWatcher = new EditTextWatcher(textListener, this);
             ButterKnife.bind(this, itemView);
+
+            id.addTextChangedListener(editTextWatcher);
+            countryId.addTextChangedListener(editTextWatcher);
+            languageId.addTextChangedListener(editTextWatcher);
         }
     }
 
@@ -59,7 +69,7 @@ public class CountryLanguagesAdapter extends RecyclerView.Adapter<RecyclerView.V
             viewHolder = new CountryLanguagesHeaderHolder(itemView);
         } else if (viewType == ITEM_VIEW_DATA) {
             View itemView = inflater.inflate(R.layout.country_languages_row, parent, false);
-            viewHolder = new CountryLanguagesHolder(itemView);
+            viewHolder = new CountryLanguagesHolder(itemView, textListener);
         }
         return viewHolder;
     }
@@ -76,9 +86,6 @@ public class CountryLanguagesAdapter extends RecyclerView.Adapter<RecyclerView.V
             holder.id.setText(String.valueOf(model.getId()));
             holder.countryId.setText(String.valueOf(model.getCountryId()));
             holder.languageId.setText(String.valueOf(model.getLanguageId()));
-        } else {
-            holder.id.setFocusable(false);
-            holder.id.setClickable(false);
         }
     }
 
