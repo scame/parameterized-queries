@@ -53,6 +53,17 @@ public class CountryLanguagesBridgeTable {
         }
     }
 
+    public int updateRecord(CountryLanguagesModel countryLanguagesModel) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_COUNTRY_ID, countryLanguagesModel.getCountryId());
+        values.put(KEY_LANGUAGE_ID, countryLanguagesModel.getLanguageId());
+
+        return db.update(TABLE_NAME, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(countryLanguagesModel.getId()) });
+    }
+
     public List<CountryLanguagesModel> getAllCountriesLanguages() {
         List<CountryLanguagesModel> countriesLanguages = new ArrayList<>();
 

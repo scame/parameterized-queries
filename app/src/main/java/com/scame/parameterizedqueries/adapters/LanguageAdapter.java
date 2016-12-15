@@ -57,15 +57,13 @@ public class LanguageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
 
         public boolean validate() {
-            return !(!languageId.getText().toString().matches("^-?\\d+$") ||
-                    languageName.getText().toString().isEmpty() ||
+            return !(languageName.getText().toString().isEmpty() ||
                     !nativeSpeakers.getText().toString().matches("^-?\\d+$") ||
                     languageFamily.getText().toString().isEmpty());
         }
 
         public LanguageModel getLanguageModel() {
-            return new LanguageModel(Integer.valueOf(languageId.getText().toString()),
-                    languageName.getText().toString(),
+            return new LanguageModel(0, languageName.getText().toString(),
                     Integer.valueOf(nativeSpeakers.getText().toString()),
                     languageFamily.getText().toString());
         }

@@ -18,6 +18,12 @@ public class CountryLangugesRepositoryImpl implements CountryLanguagesRepository
     }
 
     @Override
+    public Completable updateCountryLanguagesRecord(CountryLanguagesModel countryLanguagesModel) {
+        bridgeTable.updateRecord(countryLanguagesModel);
+        return Completable.complete();
+    }
+
+    @Override
     public Completable addCountryLanguagesRecord(CountryLanguagesModel countryLanguagesModel) {
         bridgeTable.addRecord(countryLanguagesModel);
         return Completable.complete();

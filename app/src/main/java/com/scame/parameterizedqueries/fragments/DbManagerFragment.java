@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.scame.parameterizedqueries.R;
 import com.scame.parameterizedqueries.activities.TabsActivity;
@@ -121,21 +122,26 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
     }
 
     private void processSwipedItem(String selectedTable, int adapterPosition) {
-        if (selectedTable.equals(tablesArray[COUNTRY_INDEX])) {
-            countries.remove(adapterPosition - 1);
-            countryAdapter.notifyItemRemoved(adapterPosition);
+        RecyclerView.ViewHolder viewHolder = dbManagerRv.findViewHolderForAdapterPosition(adapterPosition);
 
+        if (selectedTable.equals(tablesArray[COUNTRY_INDEX])) {
+            CountryAdapter.CountriesHolder holder = (CountryAdapter.CountriesHolder) viewHolder;
+            presenter.deleteCountryRecord(holder.getCountryModel());
+            presenter.requestCountryData();
         } else if (selectedTable.equals(tablesArray[LANGUAGE_INDEX])) {
-            languages.remove(adapterPosition - 1);
-            languageAdapter.notifyItemRemoved(adapterPosition);
+            LanguageAdapter.LanguagesHolder holder = (LanguageAdapter.LanguagesHolder) viewHolder;
+            presenter.deleteLanguageRecord(holder.getLanguageModel());
+            presenter.requestLanguageData();
 
         } else if (selectedTable.equals(tablesArray[CAPITAL_INDEX])) {
-            capitals.remove(adapterPosition - 1);
-            capitalAdapter.notifyItemRemoved(adapterPosition);
+            CapitalAdapter.CapitalsHolder holder = (CapitalAdapter.CapitalsHolder) viewHolder;
+            presenter.deleteCapitalRecord(holder.getCapitalModel());
+            presenter.requestCapitalData();
 
         } else if (selectedTable.equals(tablesArray[COUNTRY_LANGS_INDEX])) {
-            countryLanguages.remove(adapterPosition - 1);
-            countryLanguagesAdapter.notifyItemRemoved(adapterPosition);
+            CountryLanguagesAdapter.CountryLanguagesHolder holder = (CountryLanguagesAdapter.CountryLanguagesHolder) viewHolder;
+            presenter.deleteCountryLangsRecord(holder.getCountryLanguagesModel());
+            presenter.requestCountryLangsData();
         }
     }
 
@@ -160,16 +166,7 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedTable = parent.getItemAtPosition(position).toString();
-
-                if (selectedTable.equals(tablesArray[COUNTRY_INDEX])) {
-                    presenter.requestCountryData();
-                } else if (selectedTable.equals(tablesArray[LANGUAGE_INDEX])) {
-                    presenter.requestLanguageData();
-                } else if (selectedTable.equals(tablesArray[CAPITAL_INDEX])) {
-                    presenter.requestCapitalData();
-                } else if (selectedTable.equals(tablesArray[COUNTRY_LANGS_INDEX])) {
-                    presenter.requestCountryLangsData();
-                }
+                requestTable(selectedTable);
             }
 
             @Override
@@ -177,6 +174,18 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
 
             }
         });
+    }
+
+    private void requestTable(String selectedTable) {
+        if (selectedTable.equals(tablesArray[COUNTRY_INDEX])) {
+            presenter.requestCountryData();
+        } else if (selectedTable.equals(tablesArray[LANGUAGE_INDEX])) {
+            presenter.requestLanguageData();
+        } else if (selectedTable.equals(tablesArray[CAPITAL_INDEX])) {
+            presenter.requestCapitalData();
+        } else if (selectedTable.equals(tablesArray[COUNTRY_LANGS_INDEX])) {
+            presenter.requestCountryLangsData();
+        }
     }
 
     private ActionMode.Callback modeCallBack = new ActionMode.Callback() {
@@ -197,9 +206,12 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_save_or_edit:
+                    handleSaveOrEditClick();
                     mode.finish();
                     return true;
                 case R.id.menu_cancel:
+                    String selectedTable = tablesSpinner.getSelectedItem().toString();
+                    requestTable(selectedTable);
                     mode.finish();
                     return true;
                 default:
@@ -212,6 +224,87 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
             currentActionMode = null;
         }
     };
+
+    private void handleSaveOrEditClick() {
+        String selectedTable = tablesSpinner.getSelectedItem().toString();
+        if (selectedTable.equals(tablesArray[COUNTRY_INDEX])) {
+            if (countries.size() == editedItemPosition) {
+                handleCountryInsert();
+            } else {
+                handleCountryUpdate();
+            }
+        } else if (selectedTable.equals(tablesArray[LANGUAGE_INDEX])) {
+            if (languages.size() == editedItemPosition) {
+                handleLanguageInsert();
+            } else {
+                handleLanguageUpdate();
+            }
+        } else if (selectedTable.equals(tablesArray[CAPITAL_INDEX])) {
+            if (capitals.size() == editedItemPosition) {
+                handleCapitalInsert();
+            } else {
+                handleCapitalUpdate();
+            }
+        } else if (selectedTable.equals(tablesArray[COUNTRY_LANGS_INDEX])) {
+            if (countryLanguages.size() == editedItemPosition) {
+                handleCountryLangsInsert();
+            } else {
+                handleCountryLangsUpdate();
+            }
+        }
+    }
+
+    private void handleCountryLangsUpdate() {
+
+    }
+
+    private void handleCountryLangsInsert() {
+
+    }
+
+    private void handleCapitalUpdate() {
+
+    }
+
+    private void handleCapitalInsert() {
+
+    }
+
+    private void handleLanguageUpdate() {
+
+    }
+
+    private void handleLanguageInsert() {
+        LanguageAdapter.LanguagesHolder holder = (LanguageAdapter.LanguagesHolder) dbManagerRv
+                .findViewHolderForAdapterPosition(editedItemPosition);
+        if (holder.validate()) {
+            presenter.addLanguageRecord(holder.getLanguageModel());
+            presenter.requestLanguageData();
+        } else {
+            Toast.makeText(getContext(), "Validation failure", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void handleCountryInsert() {
+        CountryAdapter.CountriesHolder holder = (CountryAdapter.CountriesHolder) dbManagerRv
+                .findViewHolderForAdapterPosition(editedItemPosition);
+        if (holder.validate()) {
+            presenter.addCountryRecord(holder.getCountryModel());
+            presenter.requestCountryData();
+        } else {
+            Toast.makeText(getContext(), "Validation failure", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void handleCountryUpdate() {
+        CountryAdapter.CountriesHolder holder = (CountryAdapter.CountriesHolder) dbManagerRv
+                .findViewHolderForAdapterPosition(editedItemPosition);
+        if (holder.validate()) {
+
+        } else {
+            Toast.makeText(getContext(), "Validation failure", Toast.LENGTH_LONG).show();
+        }
+    }
 
 
     private void inject() {
@@ -254,7 +347,7 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
     }
 
     private final TextChangedListener textListener = (adapterPosition, length) -> {
-        if (currentActionMode == null) {
+        if (currentActionMode == null || adapterPosition != editedItemPosition) {
             editedItemPosition = adapterPosition;
             currentActionMode = toolbar.startActionMode(modeCallBack);
         }

@@ -10,6 +10,8 @@ import rx.Single;
 
 public interface CountryLanguagesRepository {
 
+    Completable updateCountryLanguagesRecord(CountryLanguagesModel countryLanguagesModel);
+
     Completable addCountryLanguagesRecord(CountryLanguagesModel countryLanguagesModel);
 
     Completable deleteCountryLanguagesRecord(CountryLanguagesModel countryLanguagesModel);

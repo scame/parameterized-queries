@@ -30,6 +30,12 @@ public class CapitalRepositoryImpl implements CapitalRepository {
     }
 
     @Override
+    public Completable updateCapital(CapitalModel capitalModel) {
+        capitalTable.updateRecord(capitalModel);
+        return Completable.complete();
+    }
+
+    @Override
     public Single<List<CapitalModel>> getAllCapitals() {
         return Single.defer(() -> Single.just(capitalTable.getAllCapitals()));
     }

@@ -10,12 +10,20 @@ public final class CapitalUseCases {
 
     private final AddCapitalRecord addCapitalRecord;
 
+    private final UpdateCapitalRecord updateCapitalRecord;
+
     public CapitalUseCases(GetAllCapitalsRecords getAllCapitalsRecords,
                            DeleteCapitalRecord deleteCapitalRecord,
-                           AddCapitalRecord addCapitalRecord) {
+                           AddCapitalRecord addCapitalRecord,
+                           UpdateCapitalRecord updateCapitalRecord) {
         this.getAllCapitalsRecords = getAllCapitalsRecords;
         this.deleteCapitalRecord = deleteCapitalRecord;
         this.addCapitalRecord = addCapitalRecord;
+        this.updateCapitalRecord = updateCapitalRecord;
+    }
+
+    public UpdateCapitalRecord getUpdateCapitalRecord() {
+        return updateCapitalRecord;
     }
 
     public GetAllCapitalsRecords getGetAllCapitalsRecords() {
@@ -31,7 +39,8 @@ public final class CapitalUseCases {
     }
 
     public void unsubscribe() {
-        getAddCapitalRecord().unsubscribe();
+        updateCapitalRecord.unsubscribe();
+        getAllCapitalsRecords.unsubscribe();
         deleteCapitalRecord.unsubscribe();
         addCapitalRecord.unsubscribe();
     }

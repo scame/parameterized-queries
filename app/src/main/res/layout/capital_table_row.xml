@@ -7,7 +7,8 @@
     <EditText
         android:id="@+id/capital_id_tv"
         style="@style/record_style"
-        android:layout_weight="2" />
+        android:layout_weight="2"
+        android:editable="false"/>
 
     <EditText
         android:id="@+id/country_id_tv"

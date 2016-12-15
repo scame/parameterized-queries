@@ -54,6 +54,18 @@ public class LanguageTable {
         }
     }
 
+    public int updateRecord(LanguageModel languageModel) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_LANGUAGE_NAME, languageModel.getName());
+        values.put(KEY_NATIVE_SPEAKERS, languageModel.getNativeSpeakers());
+        values.put(KEY_LANGUAGE_FAMILY, languageModel.getLanguageFamily());
+
+        return db.update(TABLE_NAME, values, KEY_LANGUAGE_ID + " = ?",
+                new String[] { String.valueOf(languageModel.getId()) });
+    }
+
     public List<LanguageModel> getAllLanguages() {
         List<LanguageModel> languages = new ArrayList<>();
 

@@ -31,7 +31,6 @@ public class CapitalTable {
         database.beginTransaction();
         try {
             ContentValues contentValues = new ContentValues();
-            contentValues.put(KEY_CAPITAL_ID, capitalModel.getId());
             contentValues.put(KEY_COUNTRY_ID, capitalModel.getCountryId());
             contentValues.put(KEY_CAPITAL_NAME, capitalModel.getName());
             contentValues.put(KEY_POPULATION, capitalModel.getPopulation());
@@ -53,6 +52,18 @@ public class CapitalTable {
         } finally {
             database.endTransaction();
         }
+    }
+
+    public int updateRecord(CapitalModel capitalModel) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_COUNTRY_ID, capitalModel.getCountryId());
+        values.put(KEY_CAPITAL_NAME, capitalModel.getName());
+        values.put(KEY_POPULATION, capitalModel.getPopulation());
+
+        return db.update(TABLE_NAME, values, KEY_CAPITAL_ID + " = ?",
+                new String[] { String.valueOf(capitalModel.getId()) });
     }
 
     public List<CapitalModel> getAllCapitals() {

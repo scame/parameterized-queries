@@ -10,6 +10,8 @@ import rx.Single;
 
 public interface LanguageRepository {
 
+    Completable updateLanguage(LanguageModel languageModel);
+
     Completable addLanguage(LanguageModel languageModel);
 
     Completable deleteLanguage(LanguageModel languageModel);

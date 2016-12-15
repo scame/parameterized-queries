@@ -6,6 +6,7 @@
 
     <EditText
         android:id="@+id/country_lang_id_tv"
+        android:editable="false"
         style="@style/record_style"
         android:layout_weight="1" />
 

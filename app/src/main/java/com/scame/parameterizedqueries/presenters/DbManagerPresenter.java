@@ -46,4 +46,13 @@ public interface DbManagerPresenter<T> extends Presenter<T> {
     void addLanguageRecord(LanguageModel languageModel);
 
     void addCountryLangsRecord(CountryLanguagesModel countryLanguagesModel);
+
+
+    void updateCountryRecord(CountryModel countryModel);
+
+    void updateCapitalRecord(CapitalModel capitalModel);
+
+    void updateLanguageRecord(LanguageModel languageModel);
+
+    void updateCountryLangsRecord(CountryLanguagesModel countryLanguagesModel);
 }

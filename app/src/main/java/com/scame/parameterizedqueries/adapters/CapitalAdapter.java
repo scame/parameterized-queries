@@ -57,15 +57,13 @@ public class CapitalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         public boolean validate() {
-            return !((!capitalId.getText().toString().matches("^-?\\d+$") ||
-                    !countryId.getText().toString().matches("^-?\\d+$") ||
+            return !((!countryId.getText().toString().matches("^-?\\d+$") ||
                     capitalName.getText().toString().isEmpty()) ||
                     !capitalPopulation.getText().toString().matches("^-?\\d+$"));
         }
 
         public CapitalModel getCapitalModel() {
-            return new CapitalModel(Integer.valueOf(capitalId.getText().toString()),
-                    Integer.valueOf(countryId.getText().toString()),
+            return new CapitalModel(0, Integer.valueOf(countryId.getText().toString()),
                     capitalName.getText().toString(),
                     Integer.valueOf(capitalPopulation.getText().toString()));
         }

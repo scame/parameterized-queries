@@ -14,5 +14,7 @@ public interface CapitalRepository {
 
     Completable addCapital(CapitalModel capitalModel);
 
+    Completable updateCapital(CapitalModel capitalModel);
+
     Single<List<CapitalModel>> getAllCapitals();
 }

@@ -156,6 +156,42 @@ public class DbManagerPresenterImpl<T extends DbManagerPresenter.DbManagerView> 
     }
 
     @Override
+    public void updateCountryRecord(CountryModel countryModel) {
+        countryUseCases.getUpdateCountryRecord().setCountryModel(countryModel);
+        countryUseCases.getUpdateCountryRecord().executeCompletable(
+                () -> Log.i("onxUpdateCountryRecord", "complete"),
+                throwable -> Log.i("onxUpdateCountryErr", throwable.getLocalizedMessage())
+        );
+    }
+
+    @Override
+    public void updateCapitalRecord(CapitalModel capitalModel) {
+        capitalUseCases.getUpdateCapitalRecord().setCapitalModel(capitalModel);
+        capitalUseCases.getUpdateCapitalRecord().executeCompletable(
+                () -> Log.i("onxUpdateCapitalRecord", "complete"),
+                throwable -> Log.i("onxUpdateCapitalErr", throwable.getLocalizedMessage())
+        );
+    }
+
+    @Override
+    public void updateLanguageRecord(LanguageModel languageModel) {
+        languageUseCases.getUpdateLanguageRecord().setLanguageModel(languageModel);
+        languageUseCases.getUpdateLanguageRecord().executeCompletable(
+                () -> Log.i("onxUpdateLanguageRecord", "complete"),
+                throwable -> Log.i("onxUpdateLanguageErr", throwable.getLocalizedMessage())
+        );
+    }
+
+    @Override
+    public void updateCountryLangsRecord(CountryLanguagesModel countryLanguagesModel) {
+        countryLangsUseCases.getUpdateCountryLanguagesRecord().setCountryLanguagesModel(countryLanguagesModel);
+        countryLangsUseCases.getUpdateCountryLanguagesRecord().executeCompletable(
+                () -> Log.i("onxCountryLangRecordUpd", "complete"),
+                throwable -> Log.i("onxCountryLangRecordErr", throwable.getLocalizedMessage())
+        );
+    }
+
+    @Override
     public void setView(T view) {
         this.view = view;
     }

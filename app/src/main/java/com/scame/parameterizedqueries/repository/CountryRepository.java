@@ -10,6 +10,8 @@ import rx.Single;
 
 public interface CountryRepository {
 
+    Completable updateRecord(CountryModel countryModel);
+
     Completable deleteRecord(CountryModel countryModel);
 
     Completable addRecord(CountryModel countryModel);

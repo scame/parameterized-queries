@@ -53,14 +53,12 @@ public class CountryLanguagesAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
 
         public boolean validate() {
-            return !(!id.getText().toString().matches("^-?\\d+$") ||
-                    !countryId.getText().toString().matches("^-?\\d+$") ||
+            return !(!countryId.getText().toString().matches("^-?\\d+$") ||
                     !languageId.getText().toString().matches("^-?\\d+$"));
         }
 
         public CountryLanguagesModel getCountryLanguagesModel() {
-            return new CountryLanguagesModel(Integer.valueOf(id.getText().toString()),
-                    Integer.valueOf(countryId.getText().toString()),
+            return new CountryLanguagesModel(0, Integer.valueOf(countryId.getText().toString()),
                     Integer.valueOf(languageId.getText().toString()));
         }
     }

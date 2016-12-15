@@ -18,6 +18,12 @@ public class LanguageRepositoryImpl implements LanguageRepository {
     }
 
     @Override
+    public Completable updateLanguage(LanguageModel languageModel) {
+        languageTable.updateRecord(languageModel);
+        return Completable.complete();
+    }
+
+    @Override
     public Completable addLanguage(LanguageModel languageModel) {
         languageTable.addRecord(languageModel);
         return Completable.complete();

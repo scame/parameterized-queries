@@ -10,12 +10,16 @@ public final class LanguageUseCases {
 
     private final AddLanguageRecord addLanguageRecord;
 
+    private final UpdateLanguageRecord updateLanguageRecord;
+
     public LanguageUseCases(GetAllLanguagesRecords getAllLanguagesRecords,
                             DeleteLanguageRecord deleteLanguageRecord,
-                            AddLanguageRecord addLanguageRecord) {
+                            AddLanguageRecord addLanguageRecord,
+                            UpdateLanguageRecord updateLanguageRecord) {
         this.getAllLanguagesRecords = getAllLanguagesRecords;
         this.deleteLanguageRecord = deleteLanguageRecord;
         this.addLanguageRecord = addLanguageRecord;
+        this.updateLanguageRecord = updateLanguageRecord;
     }
 
     public GetAllLanguagesRecords getGetAllLanguagesRecords() {
@@ -30,9 +34,14 @@ public final class LanguageUseCases {
         return addLanguageRecord;
     }
 
+    public UpdateLanguageRecord getUpdateLanguageRecord() {
+        return updateLanguageRecord;
+    }
+
     public void unsubscribe() {
         getAllLanguagesRecords.unsubscribe();
         deleteLanguageRecord.unsubscribe();
         addLanguageRecord.unsubscribe();
+        updateLanguageRecord.unsubscribe();
     }
 }

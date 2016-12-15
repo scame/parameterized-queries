@@ -18,6 +18,12 @@ public class CountryRepositoryImpl implements CountryRepository {
     }
 
     @Override
+    public Completable updateRecord(CountryModel countryModel) {
+        countryTable.updateRecord(countryModel);
+        return Completable.complete();
+    }
+
+    @Override
     public Completable deleteRecord(CountryModel countryModel) {
         countryTable.deleteRecord(countryModel);
         return Completable.complete();

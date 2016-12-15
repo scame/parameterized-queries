@@ -53,14 +53,12 @@ public class CountryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         public boolean validate() {
-            return !(!countryId.getText().toString().matches("^-?\\d+$")
-                    || countryName.getText().toString().isEmpty()
+            return !(countryName.getText().toString().isEmpty()
                     || !countryPopulation.getText().toString().matches("^-?\\d+$"));
         }
 
         public CountryModel getCountryModel() {
-            return new CountryModel(Integer.valueOf(countryId.getText().toString()),
-                    countryName.getText().toString(),
+            return new CountryModel(0, countryName.getText().toString(),
                     Integer.valueOf(countryPopulation.getText().toString()));
         }
     }

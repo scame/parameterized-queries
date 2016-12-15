@@ -52,6 +52,17 @@ public class CountryTable {
         }
     }
 
+    public int updateRecord(CountryModel countryModel) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_COUNTRY_NAME, countryModel.getName());
+        values.put(KEY_POPULATION, countryModel.getPopulation());
+
+        return db.update(TABLE_NAME, values, KEY_COUNTRY_ID + " = ?",
+                new String[] { String.valueOf(countryModel.getId()) });
+    }
+
     public List<CountryModel> getAllCountries() {
         List<CountryModel> countries = new ArrayList<>();
 
