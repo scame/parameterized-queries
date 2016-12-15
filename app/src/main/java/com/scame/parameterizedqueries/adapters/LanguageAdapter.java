@@ -104,6 +104,11 @@ public class LanguageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             languagesHolder.languageName.setText(model.getName());
             languagesHolder.languageFamily.setText(model.getLanguageFamily());
             languagesHolder.nativeSpeakers.setText(String.valueOf(model.getNativeSpeakers()));
+        } else {
+            languagesHolder.languageId.setText("");
+            languagesHolder.languageName.setText("");
+            languagesHolder.languageFamily.setText("");
+            languagesHolder.nativeSpeakers.setText("");
         }
     }
 

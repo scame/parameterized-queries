@@ -101,7 +101,16 @@ public class CapitalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private void bindCapitalsHolder(CapitalsHolder capitalsHolder, CapitalModel model) {
         if (model.getId() != -1) {
             populateView(capitalsHolder, model);
+        } else {
+            populateView(capitalsHolder);
         }
+    }
+
+    private void populateView(CapitalsHolder capitalsHolder) {
+        capitalsHolder.capitalId.setText("");
+        capitalsHolder.countryId.setText("");
+        capitalsHolder.capitalName.setText("");
+        capitalsHolder.capitalPopulation.setText("");
     }
 
     private void populateView(CapitalsHolder capitalsHolder, CapitalModel model) {

@@ -30,7 +30,6 @@ public class CountryLanguagesBridgeTable {
         database.beginTransaction();
         try {
             ContentValues contentValues = new ContentValues();
-            contentValues.put(KEY_ID, countryLanguagesModel.getId());
             contentValues.put(KEY_COUNTRY_ID, countryLanguagesModel.getCountryId());
             contentValues.put(KEY_LANGUAGE_ID, countryLanguagesModel.getLanguageId());
 
