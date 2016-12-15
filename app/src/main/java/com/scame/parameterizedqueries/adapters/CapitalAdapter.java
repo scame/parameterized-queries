@@ -29,7 +29,7 @@ public class CapitalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.textListener = textListener;
     }
 
-    static class CapitalsHolder extends RecyclerView.ViewHolder {
+    public static class CapitalsHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.capital_id_tv)
         EditText capitalId;
@@ -54,6 +54,20 @@ public class CapitalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             countryId.addTextChangedListener(editTextWatcher);
             capitalName.addTextChangedListener(editTextWatcher);
             capitalPopulation.addTextChangedListener(editTextWatcher);
+        }
+
+        public boolean validate() {
+            return !((!capitalId.getText().toString().matches("^-?\\d+$") ||
+                    !countryId.getText().toString().matches("^-?\\d+$") ||
+                    capitalName.getText().toString().isEmpty()) ||
+                    !capitalPopulation.getText().toString().matches("^-?\\d+$"));
+        }
+
+        public CapitalModel getCapitalModel() {
+            return new CapitalModel(Integer.valueOf(capitalId.getText().toString()),
+                    Integer.valueOf(countryId.getText().toString()),
+                    capitalName.getText().toString(),
+                    Integer.valueOf(capitalPopulation.getText().toString()));
         }
     }
 

@@ -76,6 +76,8 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
 
     private String[] tablesArray;
 
+    private int editedItemPosition;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -194,7 +196,7 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.menu_edit:
+                case R.id.menu_save_or_edit:
                     mode.finish();
                     return true;
                 case R.id.menu_cancel:
@@ -253,6 +255,7 @@ public class DbManagerFragment extends Fragment implements DbManagerPresenter.Db
 
     private final TextChangedListener textListener = (adapterPosition, length) -> {
         if (currentActionMode == null) {
+            editedItemPosition = adapterPosition;
             currentActionMode = toolbar.startActionMode(modeCallBack);
         }
     };

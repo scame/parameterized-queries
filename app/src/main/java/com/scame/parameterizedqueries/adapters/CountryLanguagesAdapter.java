@@ -29,7 +29,7 @@ public class CountryLanguagesAdapter extends RecyclerView.Adapter<RecyclerView.V
         this.textListener = textListener;
     }
 
-    static class CountryLanguagesHolder extends RecyclerView.ViewHolder {
+    public static class CountryLanguagesHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.country_lang_id_tv)
         EditText id;
@@ -50,6 +50,18 @@ public class CountryLanguagesAdapter extends RecyclerView.Adapter<RecyclerView.V
             id.addTextChangedListener(editTextWatcher);
             countryId.addTextChangedListener(editTextWatcher);
             languageId.addTextChangedListener(editTextWatcher);
+        }
+
+        public boolean validate() {
+            return !(!id.getText().toString().matches("^-?\\d+$") ||
+                    !countryId.getText().toString().matches("^-?\\d+$") ||
+                    !languageId.getText().toString().matches("^-?\\d+$"));
+        }
+
+        public CountryLanguagesModel getCountryLanguagesModel() {
+            return new CountryLanguagesModel(Integer.valueOf(id.getText().toString()),
+                    Integer.valueOf(countryId.getText().toString()),
+                    Integer.valueOf(languageId.getText().toString()));
         }
     }
 

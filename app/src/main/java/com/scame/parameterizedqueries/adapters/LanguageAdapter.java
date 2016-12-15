@@ -29,7 +29,7 @@ public class LanguageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.textListener = textListener;
     }
 
-    static class LanguagesHolder extends RecyclerView.ViewHolder {
+    public static class LanguagesHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.language_id_tv)
         EditText languageId;
@@ -54,6 +54,20 @@ public class LanguageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             languageName.addTextChangedListener(editTextWatcher);
             nativeSpeakers.addTextChangedListener(editTextWatcher);
             languageFamily.addTextChangedListener(editTextWatcher);
+        }
+
+        public boolean validate() {
+            return !(!languageId.getText().toString().matches("^-?\\d+$") ||
+                    languageName.getText().toString().isEmpty() ||
+                    !nativeSpeakers.getText().toString().matches("^-?\\d+$") ||
+                    languageFamily.getText().toString().isEmpty());
+        }
+
+        public LanguageModel getLanguageModel() {
+            return new LanguageModel(Integer.valueOf(languageId.getText().toString()),
+                    languageName.getText().toString(),
+                    Integer.valueOf(nativeSpeakers.getText().toString()),
+                    languageFamily.getText().toString());
         }
     }
 
