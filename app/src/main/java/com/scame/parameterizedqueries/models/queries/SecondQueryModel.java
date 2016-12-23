@@ -8,6 +8,13 @@ public class SecondQueryModel {
 
     private String languageFamily;
 
+    public SecondQueryModel() { }
+
+    public SecondQueryModel(String country, String languageFamily) {
+        this.country = country;
+        this.languageFamily = languageFamily;
+    }
+
     public String getCountry() {
         return country;
     }

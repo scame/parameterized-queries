@@ -11,8 +11,11 @@ import com.scame.parameterizedqueries.DbApplication;
 import com.scame.parameterizedqueries.R;
 import com.scame.parameterizedqueries.adapters.DbPagerAdapter;
 import com.scame.parameterizedqueries.di.components.DaggerDbManagerComponent;
+import com.scame.parameterizedqueries.di.components.DaggerQueriesComponent;
 import com.scame.parameterizedqueries.di.components.DbManagerComponent;
+import com.scame.parameterizedqueries.di.components.QueriesComponent;
 import com.scame.parameterizedqueries.di.modules.DbManagerModule;
+import com.scame.parameterizedqueries.di.modules.QueriesModule;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +32,8 @@ public class TabsActivity extends AppCompatActivity {
     TabLayout tabLayout;
 
     private DbManagerComponent dbManagerComponent;
+
+    private QueriesComponent queriesComponent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,5 +57,15 @@ public class TabsActivity extends AppCompatActivity {
                     .build();
         }
         return dbManagerComponent;
+    }
+
+    public QueriesComponent getQueriesComponent() {
+        if (queriesComponent == null) {
+            queriesComponent = DaggerQueriesComponent.builder()
+                    .applicationComponent(DbApplication.getAppComponent())
+                    .queriesModule(new QueriesModule())
+                    .build();
+        }
+        return queriesComponent;
     }
 }

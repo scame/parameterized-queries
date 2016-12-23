@@ -2,13 +2,13 @@ package com.scame.parameterizedqueries.models.queries;
 
 
 
-public class SixthQueryModel {
+public class EighthQueryModel {
 
     private String country;
 
-    public SixthQueryModel() { }
+    public EighthQueryModel() { }
 
-    public SixthQueryModel(String country) {
+    public EighthQueryModel(String country) {
         this.country = country;
     }
 

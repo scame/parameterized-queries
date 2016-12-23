@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.scame.parameterizedqueries.R;
+import com.scame.parameterizedqueries.activities.TabsActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +41,19 @@ public class QueryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.query_layout, container, false);
         ButterKnife.bind(this, fragmentView);
+        inject();
 
         return fragmentView;
+    }
+
+    private void inject() {
+        if (getActivity() instanceof TabsActivity) {
+            ((TabsActivity) getActivity()).getQueriesComponent().inject(this);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 }

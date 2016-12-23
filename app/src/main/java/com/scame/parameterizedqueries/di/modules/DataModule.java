@@ -15,6 +15,7 @@ import com.scame.parameterizedqueries.sqlite.CountryLanguagesBridgeTable;
 import com.scame.parameterizedqueries.sqlite.CountryTable;
 import com.scame.parameterizedqueries.sqlite.DatabaseOpenHelper;
 import com.scame.parameterizedqueries.sqlite.LanguageTable;
+import com.scame.parameterizedqueries.sqlite.QueriesDispatcher;
 
 import javax.inject.Singleton;
 
@@ -76,5 +77,11 @@ public class DataModule {
     @Singleton
     CountryLanguagesRepository provideCountryLanguagesRepository(CountryLanguagesBridgeTable bridgeTable) {
         return new CountryLangugesRepositoryImpl(bridgeTable);
+    }
+
+    @Provides
+    @Singleton
+    QueriesDispatcher provideQueriesManager(DatabaseOpenHelper openHelper) {
+        return new QueriesDispatcher(openHelper);
     }
 }

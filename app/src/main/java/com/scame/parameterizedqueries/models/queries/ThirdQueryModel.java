@@ -5,7 +5,14 @@ public class ThirdQueryModel {
 
     private String language;
 
-    private String numberOfCountries;
+    private int numberOfCountries;
+
+    public ThirdQueryModel() { }
+
+    public ThirdQueryModel(String language, int numberOfCountries) {
+        this.language = language;
+        this.numberOfCountries = numberOfCountries;
+    }
 
     public String getLanguage() {
         return language;
@@ -15,11 +22,11 @@ public class ThirdQueryModel {
         this.language = language;
     }
 
-    public String getNumberOfCountries() {
+    public int getNumberOfCountries() {
         return numberOfCountries;
     }
 
-    public void setNumberOfCountries(String numberOfCountries) {
+    public void setNumberOfCountries(int numberOfCountries) {
         this.numberOfCountries = numberOfCountries;
     }
 }

@@ -1,14 +1,15 @@
 package com.scame.parameterizedqueries.models.queries;
 
 
-
 public class FourthQueryModel {
 
     private String language;
 
-    private String capital;
+    public FourthQueryModel() { }
 
-    private int population;
+    public FourthQueryModel(String language) {
+        this.language = language;
+    }
 
     public String getLanguage() {
         return language;
@@ -16,21 +17,5 @@ public class FourthQueryModel {
 
     public void setLanguage(String language) {
         this.language = language;
-    }
-
-    public String getCapital() {
-        return capital;
-    }
-
-    public void setCapital(String capital) {
-        this.capital = capital;
-    }
-
-    public int getPopulation() {
-        return population;
-    }
-
-    public void setPopulation(int population) {
-        this.population = population;
     }
 }

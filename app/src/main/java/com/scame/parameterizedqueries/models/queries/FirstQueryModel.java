@@ -10,6 +10,14 @@ public class FirstQueryModel {
 
     private int nativeSpeakers;
 
+    public FirstQueryModel() { }
+
+    public FirstQueryModel(String country, String language, int nativeSpeakers) {
+        this.country = country;
+        this.language = language;
+        this.nativeSpeakers = nativeSpeakers;
+    }
+
     public String getCountry() {
         return country;
     }

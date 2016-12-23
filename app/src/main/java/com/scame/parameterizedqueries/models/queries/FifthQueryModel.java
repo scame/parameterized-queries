@@ -10,6 +10,14 @@ public class FifthQueryModel {
 
     private int countryPopulation;
 
+    public FifthQueryModel() { }
+
+    public FifthQueryModel(String capital, String country, int countryPopulation) {
+        this.capital = capital;
+        this.country = country;
+        this.countryPopulation = countryPopulation;
+    }
+
     public String getCapital() {
         return capital;
     }
