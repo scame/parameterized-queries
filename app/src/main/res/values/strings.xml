@@ -17,6 +17,8 @@
     <string name="capital_id">cap_id</string>
     <string name="capital_name">cap_name</string>
     <string name="capital_population">cap_population</string>
+    <string name="execute">execute</string>
+    <string name="argument">argument</string>
 
     <string-array name="tables_array">
         <item>Country</item>
@@ -35,4 +37,24 @@
         <item>Query7</item>
         <item>Query8</item>
     </string-array>
+
+    <string-array name="queries_description_array">
+        <item>@string/query1</item>
+        <item>@string/query2</item>
+        <item>@string/query3</item>
+        <item>@string/query4</item>
+        <item>@string/query5</item>
+        <item>@string/query6</item>
+        <item>@string/query7</item>
+        <item>@string/query8</item>
+    </string-array>
+
+    <string name="query1">Вивести країни (та їх мови), що мають хоча б 1 мову з понад [?] носіїв</string>
+    <string name="query2">Знайти країни та мовні групи тих країн, мови яких не в [?] мовній групі</string>
+    <string name="query3">Знайти мови, якими розмовляють більше, аніж в [?] країнах</string>
+    <string name="query4">Знайти мови, якими не говорять в країнах, де населення столиці менше [?]</string>
+    <string name="query5">Знайти столиці, у країни яких проживають менше [?]</string>
+    <string name="query6">Визначити країни, у яких розмовляють мовами (1+) з тієї ж мовної сім\'ї, що і сім\'ї мов, якими розмовляють у [?]</string>
+    <string name="query7">Визначити мови, якими не розмовляють країни з населенням менше [?]</string>
+    <string name="query8">Знайти країни, де розмовляють тільки мовами [?] мовної групи</string>
 </resources>
