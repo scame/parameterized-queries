@@ -84,8 +84,8 @@ public class QueriesPresenterImpl<T extends QueriesPresenter.QueriesView> implem
     }
 
     @Override
-    public void execSixthQuery(String countryNumber) {
-        sixthQueryUseCase.setCountryName(countryNumber);
+    public void execSixthQuery(String countryName) {
+        sixthQueryUseCase.setCountryName(countryName);
         sixthQueryUseCase.executeSingle(sixthQueryModels -> {
             if (view != null) view.displaySixthQueryResult(sixthQueryModels);
         }, newErrorCallback());

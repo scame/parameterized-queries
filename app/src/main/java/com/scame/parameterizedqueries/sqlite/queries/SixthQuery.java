@@ -23,7 +23,7 @@ public class SixthQuery {
         List<SixthQueryModel> sixthQueryModels = new ArrayList<>();
 
         SQLiteDatabase database = openHelper.getReadableDatabase();
-        Cursor cursor = database.rawQuery(getSixthQueryStatement(), new String[] {countryName});
+        Cursor cursor = database.rawQuery(getSixthQueryStatement(), new String[] {countryName, countryName});
 
         if (cursor != null && cursor.moveToFirst()) {
             try {
@@ -36,15 +36,16 @@ public class SixthQuery {
     }
 
     private String getSixthQueryStatement() {
-        return "SELECT country_name " +
+        return "SELECT DISTINCT country_name " +
                 "FROM (country JOIN country_languages " +
                 "ON country.country_id = country_languages.country_id) JOIN language " +
                 "ON country_languages.language_id = language.language_id " +
-                "WHERE language.language_family IN (SELECT language.language_family " +
-                "FROM (country JOIN country_languages " +
-                "ON country.country_id = country_languages.country_id) JOIN language " +
-                "ON country_languages.language_id = language.language_id " +
-                "WHERE country.country_name = ?)";
+                "WHERE country.country_name <> ? AND language.language_family " +
+                    "IN (SELECT language.language_family " +
+                    "FROM (country JOIN country_languages " +
+                    "ON country.country_id = country_languages.country_id) JOIN language " +
+                    "ON country_languages.language_id = language.language_id " +
+                    "WHERE country.country_name = ?)";
     }
 
     private List<SixthQueryModel> parseSixthQuery(Cursor cursor) {

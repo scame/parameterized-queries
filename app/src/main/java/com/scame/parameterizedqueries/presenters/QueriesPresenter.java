@@ -45,7 +45,7 @@ public interface QueriesPresenter<T> extends Presenter<T> {
 
     void execFifthQuery(int countryPopulation);
 
-    void execSixthQuery(String countryNumber);
+    void execSixthQuery(String countryName);
 
     void execSeventhQuery(int countryPopulation);
 

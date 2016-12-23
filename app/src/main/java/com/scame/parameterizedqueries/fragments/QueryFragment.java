@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.scame.parameterizedqueries.R;
 import com.scame.parameterizedqueries.activities.TabsActivity;
@@ -111,6 +112,6 @@ public class QueryFragment extends Fragment implements QueriesPresenter.QueriesV
 
     @Override
     public void reportError(String error) {
-
+        Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
     }
 }
